@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROCKET · КУБ-ТЕРМИНАЛ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0b0d15;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            padding: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        /* 3D куб */
+        .cube-wrapper {
+            perspective: 800px;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .cube {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: spin 12s infinite linear;
+        }
+        .cube .face {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(0, 255, 200, 0.15);
+            border: 2px solid #00ffc8;
+            box-shadow: 0 0 30px #00ffc8, inset 0 0 30px #00ffc8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #00ffc8;
+            text-shadow: 0 0 20px #00ffc8;
+            backface-visibility: visible;
+        }
+        .cube .face:nth-child(1) { transform: translateZ(100px); }
+        .cube .face:nth-child(2) { transform: rotateX(180deg) translateZ(100px); }
+        .cube .face:nth-child(3) { transform: rotateX(90deg) translateZ(100px); }
+        .cube .face:nth-child(4) { transform: rotateX(-90deg) translateZ(100px); }
+        .cube .face:nth-child(5) { transform: rotateY(90deg) translateZ(100px); }
+        .cube .face:nth-child(6) { transform: rotateY(-90deg) translateZ(100px); }
+
+        @keyframes spin {
+            0% { transform: rotateX(0deg) rotateY(0deg); }
+            100% { transform: rotateX(360deg) rotateY(720deg); }
+        }
+
+        /* Терминал */
+        .terminal {
+            background: #0f1219;
+            border: 1px solid #2a3a4a;
+            border-radius: 12px;
+            width: 420px;
+            max-width: 90vw;
+            box-shadow: 0 0 60px rgba(0, 255, 200, 0.1);
+            padding: 20px 20px 10px 20px;
+        }
+        .terminal-header {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .terminal-header span {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #ff5f56;
+        }
+        .terminal-header span:nth-child(2) { background: #ffbd2e; }
+        .terminal-header span:nth-child(3) { background: #27c93f; }
+
+        #output {
+            background: #0b0e14;
+            border-radius: 6px;
+            padding: 14px;
+            min-height: 180px;
+            max-height: 260px;
+            overflow-y: auto;
+            color: #b0e0d0;
+            font-size: 15px;
+            line-height: 1.6;
+            border: 1px solid #1e2a33;
+            margin-bottom: 14px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        #output::-webkit-scrollbar {
+            width: 6px;
+        }
+        #output::-webkit-scrollbar-track {
+            background: #0b0e14;
+        }
+        #output::-webkit-scrollbar-thumb {
+            background: #00ffc8;
+            border-radius: 8px;
+        }
+
+        .input-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #0b0e14;
+            border: 1px solid #1e2a33;
+            border-radius: 6px;
+            padding: 6px 12px;
+        }
+        .input-line span {
+            color: #00ffc8;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        #cmd {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #e0f0ea;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            width: 100%;
+            padding: 8px 0;
+        }
+        #cmd::placeholder {
+            color: #3a4a55;
+            font-style: italic;
+        }
+        .footer-note {
+            margin-top: 14px;
+            text-align: right;
+            color: #2a4a55;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+        .glow-text {
+            color: #00ffc8;
+            text-shadow: 0 0 8px #00ffc888;
+        }
+        @media (max-width: 760px) {
+            .container { flex-direction: column; }
+            .cube-wrapper { width: 200px; height: 200px; }
+            .cube, .cube .face { width: 140px; height: 140px; }
+            .cube .face { font-size: 20px; }
+            .cube .face:nth-child(1) { transform: translateZ(70px); }
+            .cube .face:nth-child(2) { transform: rotateX(180deg) translateZ(70px); }
+            .cube .face:nth-child(3) { transform: rotateX(90deg) translateZ(70px); }
+            .cube .face:nth-child(4) { transform: rotateX(-90deg) translateZ(70px); }
+            .cube .face:nth-child(5) { transform: rotateY(90deg) translateZ(70px); }
+            .cube .face:nth-child(6) { transform: rotateY(-90deg) translateZ(70px); }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="cube-wrapper">
+        <div class="cube">
+            <div class="face">⚡</div>
+            <div class="face">⟡</div>
+            <div class="face">▣</div>
+            <div class="face">◈</div>
+            <div class="face">✦</div>
+            <div class="face">⏣</div>
+        </div>
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">
+            <span></span><span></span><span></span>
+            <span style="margin-left: auto; color:#3a5a6a; font-size:13px;">ROCKET::TERM</span>
+        </div>
+        <div id="output">> Добро пожаловать в ROCKET-терминал<br>> Введите команду: <span class="glow-text">help</span></div>
+        <div class="input-line">
+            <span>$</span>
+            <input type="text" id="cmd" placeholder="введите команду..." autofocus>
+        </div>
+        <div class="footer-note">[ v.20.05.2026 ]</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const output = document.getElementById('output');
+        const input = document.getElementById('cmd');
+        const history = [];
+        let historyIndex = -1;
+
+        // Доступные команды
+        const commands = {
+            help: () => {
+                return [
+                    'Доступные команды:',
+                    '  help        — это сообщение',
+                    '  echo <текст> — вывести текст',
+                    '  cube        — изменить цвет куба (random)',
+                    '  clear       — очистить терминал',
+                    '  whoami      — ROCKET core',
+                    '  date        — текущее время по UTC',
+                    '  calc <выр>  — вычислить выражение (+, -, *, /)',
+                    '  spin        — ускорить/замедлить вращение куба',
+                    '  exit        — завершить сессию (имитация)'
+                ].join('\n');
+            },
+            echo: (args) => args.length ? args.join(' ') : '> ошибка: укажите текст',
+            cube: () => {
+                const r = Math.floor(Math.random() * 256);
+                const g = Math.floor(Math.random() * 256);
+                const b = Math.floor(Math.random() * 256);
+                const color = `rgb(${r},${g},${b})`;
+                document.querySelectorAll('.cube .face').forEach(el => {
+                    el.style.borderColor = color;
+                    el.style.boxShadow = `0 0 40px ${color}, inset 0 0 40px ${color}`;
+                    el.style.color = color;
+                    el.style.textShadow = `0 0 20px ${color}`;
+                });
+                return `> цвет куба изменён на ${color}`;
+            },
+            clear: () => { output.innerHTML = ''; return null; },
+            whoami: () => '> ROCKET · версия 1.0 · дата создания 20.05.2026',
+            date: () => `> ${new Date().toUTCString()}`,
+            calc: (args) => {
+                if (!args.length) return '> ошибка: введите выражение';
+                const expr = args.join(' ');
+                try {
+                    const result = Function(`"use strict"; return (${expr})`)();
+                    if (typeof result !== 'number' || !isFinite(result)) throw new Error();
+                    return `> ${expr} = ${result}`;
+                } catch(e) {
+                    return `> ошибка вычисления: "${expr}"`;
+                }
+            },
+            spin: () => {
+                const cube = document.querySelector('.cube');
+                const current = cube.style.animationDuration || '12s';
+                let sec = parseFloat(current) || 12;
+                sec = sec < 2 ? 12 : (sec > 30 ? 4 : sec * 0.7);
+                if (sec < 2) sec = 2;
+                cube.style.animationDuration = sec + 's';
+                return `> скорость вращения: ${sec.toFixed(1)}с на оборот`;
+            },
+            exit: () => {
+                output.innerHTML += '\n> сессия завершена. перезагрузка...';
+                setTimeout(() => {
+                    output.innerHTML = '> Добро пожаловать в ROCKET-терминал<br>> Введите команду: <span class="glow-text">help</span>';
+                }, 800);
+                return null;
+            }
+        };
+
+        function appendLine(text) {
+            if (text === null || text === undefined) return;
+            const lines = text.split('\n');
+            lines.forEach(line => {
+                const p = document.createElement('div');
+                p.style.margin = '2px 0';
+                p.innerHTML = line;
+                output.appendChild(p);
+            });
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function processCommand(cmdLine) {
+            const trimmed = cmdLine.trim();
+            if (!trimmed) return;
+
+            // сохраняем в историю
+            history.push(trimmed);
+            historyIndex = history.length;
+
+            // разделяем на команду и аргументы
+            const parts = trimmed.match(/(?:[^\s"']+|"[^"]*"|'[^']*')+/g);
+            if (!parts) return;
+            const cmd = parts[0].toLowerCase();
+            const args = parts.slice(1).map(arg => arg.replace(/^["']|["']$/g, ''));
+
+            // выводим ввод
+            appendLine(`> ${trimmed}`);
+
+            // выполняем
+            let result = null;
+            if (commands[cmd]) {
+                result = commands[cmd](args);
+            } else {
+                result = `> неизвестная команда: "${cmd}". Введите help`;
+            }
+            if (result !== null) appendLine(result);
+        }
+
+        // Обработка ввода
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const val = input.value;
+                processCommand(val);
+                input.value = '';
+                // автофокус
+                setTimeout(() => input.focus(), 10);
+            }
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (history.length > 0) {
+                    historyIndex = Math.max(0, historyIndex - 1);
+                    input.value = history[historyIndex] || '';
+                }
+            }
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (historyIndex < history.length - 1) {
+                    historyIndex = Math.min(history.length - 1, historyIndex + 1);
+                    input.value = history[historyIndex] || '';
+                } else {
+                    historyIndex = history.length;
+                    input.value = '';
+                }
+            }
+        });
+
+        // Фокус при клике на терминал
+        document.querySelector('.terminal').addEventListener('click', () => {
+            input.focus();
+        });
+
+        // Стартовое сообщение в консоли (для отладки)
+        console.log('ROCKET терминал загружен. Введите help');
+    })();
+</script>
+</body>
+</html>
