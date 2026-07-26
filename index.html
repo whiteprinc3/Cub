@@ -1,351 +1,740 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROCKET · КУБ-ТЕРМИНАЛ</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background: #0b0d15;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Courier New', monospace;
-            overflow: hidden;
-        }
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-            padding: 20px;
-            justify-content: center;
-            align-items: center;
-        }
-        /* 3D куб */
-        .cube-wrapper {
-            perspective: 800px;
-            width: 300px;
-            height: 300px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .cube {
-            width: 200px;
-            height: 200px;
-            position: relative;
-            transform-style: preserve-3d;
-            animation: spin 12s infinite linear;
-        }
-        .cube .face {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            background: rgba(0, 255, 200, 0.15);
-            border: 2px solid #00ffc8;
-            box-shadow: 0 0 30px #00ffc8, inset 0 0 30px #00ffc8;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 28px;
-            font-weight: bold;
-            color: #00ffc8;
-            text-shadow: 0 0 20px #00ffc8;
-            backface-visibility: visible;
-        }
-        .cube .face:nth-child(1) { transform: translateZ(100px); }
-        .cube .face:nth-child(2) { transform: rotateX(180deg) translateZ(100px); }
-        .cube .face:nth-child(3) { transform: rotateX(90deg) translateZ(100px); }
-        .cube .face:nth-child(4) { transform: rotateX(-90deg) translateZ(100px); }
-        .cube .face:nth-child(5) { transform: rotateY(90deg) translateZ(100px); }
-        .cube .face:nth-child(6) { transform: rotateY(-90deg) translateZ(100px); }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
+  <title>Регламент лорников · ROCKET</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0f0e0d;
+      --bg-card: #1a1715;
+      --surface: #24211e;
+      --text: #f0edea;
+      --muted: #b0aaa4;
+      --border: #3a3530;
+      --gold: #fbbf24;
+      --green: #6ee7b7;
+      --red: #f87171;
+      --blue: #93c5fd;
+      --cyan: #22d3ee;
+      --radius: 14px;
+      --shadow: 0 12px 40px rgba(0,0,0,0.7);
+      --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      padding: 20px 16px 60px;
+      display: flex;
+      justify-content: center;
+      line-height: 1.6;
+    }
+    .wrapper {
+      max-width: 1100px;
+      width: 100%;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      padding: 0 0 20px;
+    }
+    /* HEADER */
+    .header {
+      padding: 18px 22px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .header h1 {
+      font-size: clamp(20px, 3vw, 28px);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--text);
+    }
+    .header h1 small {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--muted);
+      margin-left: 10px;
+    }
+    .search-box {
+      display: flex;
+      gap: 6px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 4px 4px 4px 16px;
+      align-items: center;
+      flex: 1 1 260px;
+      min-width: 160px;
+    }
+    .search-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-size: 14px;
+      padding: 8px 0;
+      width: 100%;
+      min-width: 80px;
+    }
+    .search-box input::placeholder { color: var(--muted); opacity: 0.7; }
+    .search-box button {
+      background: var(--gold);
+      border: none;
+      border-radius: 40px;
+      padding: 6px 16px;
+      font-weight: 700;
+      font-size: 13px;
+      color: #0f0e0d;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+    .search-box button:hover { background: #fcd34d; transform: scale(0.97); }
 
-        @keyframes spin {
-            0% { transform: rotateX(0deg) rotateY(0deg); }
-            100% { transform: rotateX(360deg) rotateY(720deg); }
-        }
+    /* LEGEND */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 20px;
+      padding: 12px 22px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-dot { display: inline-block; width: 12px; height: 12px; border-radius: 4px; }
+    .dot-gold { background: var(--gold); }
+    .dot-green { background: var(--green); }
+    .dot-red { background: var(--red); }
+    .dot-blue { background: var(--blue); }
+    .dot-cyan { background: var(--cyan); }
 
-        /* Терминал */
-        .terminal {
-            background: #0f1219;
-            border: 1px solid #2a3a4a;
-            border-radius: 12px;
-            width: 420px;
-            max-width: 90vw;
-            box-shadow: 0 0 60px rgba(0, 255, 200, 0.1);
-            padding: 20px 20px 10px 20px;
-        }
-        .terminal-header {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-        .terminal-header span {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #ff5f56;
-        }
-        .terminal-header span:nth-child(2) { background: #ffbd2e; }
-        .terminal-header span:nth-child(3) { background: #27c93f; }
+    /* TABS */
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 14px 22px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .tab-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 40px 40px 0 0;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.2s;
+      border-bottom: 3px solid transparent;
+    }
+    .tab-btn:hover { color: var(--text); background: var(--surface); }
+    .tab-btn.active {
+      color: var(--text);
+      background: var(--surface);
+      border-bottom-color: var(--gold);
+    }
+    .tab-btn[data-tab="duties"].active { border-bottom-color: var(--green); }
+    .tab-btn[data-tab="penalties"].active { border-bottom-color: var(--red); }
+    .tab-btn[data-tab="info"].active { border-bottom-color: var(--blue); }
 
-        #output {
-            background: #0b0e14;
-            border-radius: 6px;
-            padding: 14px;
-            min-height: 180px;
-            max-height: 260px;
-            overflow-y: auto;
-            color: #b0e0d0;
-            font-size: 15px;
-            line-height: 1.6;
-            border: 1px solid #1e2a33;
-            margin-bottom: 14px;
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
-        #output::-webkit-scrollbar {
-            width: 6px;
-        }
-        #output::-webkit-scrollbar-track {
-            background: #0b0e14;
-        }
-        #output::-webkit-scrollbar-thumb {
-            background: #00ffc8;
-            border-radius: 8px;
-        }
+    /* PANELS */
+    .panels { padding: 18px 22px 10px; }
+    .tab-panel { display: none; animation: fade 0.25s ease; }
+    .tab-panel.active { display: block; }
+    @keyframes fade { from { opacity: 0.4; } to { opacity: 1; } }
 
-        .input-line {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #0b0e14;
-            border: 1px solid #1e2a33;
-            border-radius: 6px;
-            padding: 6px 12px;
-        }
-        .input-line span {
-            color: #00ffc8;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        #cmd {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: #e0f0ea;
-            font-family: 'Courier New', monospace;
-            font-size: 16px;
-            width: 100%;
-            padding: 8px 0;
-        }
-        #cmd::placeholder {
-            color: #3a4a55;
-            font-style: italic;
-        }
-        .footer-note {
-            margin-top: 14px;
-            text-align: right;
-            color: #2a4a55;
-            font-size: 12px;
-            letter-spacing: 2px;
-        }
-        .glow-text {
-            color: #00ffc8;
-            text-shadow: 0 0 8px #00ffc888;
-        }
-        @media (max-width: 760px) {
-            .container { flex-direction: column; }
-            .cube-wrapper { width: 200px; height: 200px; }
-            .cube, .cube .face { width: 140px; height: 140px; }
-            .cube .face { font-size: 20px; }
-            .cube .face:nth-child(1) { transform: translateZ(70px); }
-            .cube .face:nth-child(2) { transform: rotateX(180deg) translateZ(70px); }
-            .cube .face:nth-child(3) { transform: rotateX(90deg) translateZ(70px); }
-            .cube .face:nth-child(4) { transform: rotateX(-90deg) translateZ(70px); }
-            .cube .face:nth-child(5) { transform: rotateY(90deg) translateZ(70px); }
-            .cube .face:nth-child(6) { transform: rotateY(-90deg) translateZ(70px); }
-        }
-    </style>
+    /* TOC */
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 14px;
+      padding: 10px 0 16px;
+      border-bottom: 1px dashed var(--border);
+      margin-bottom: 18px;
+    }
+    .toc a {
+      color: var(--cyan);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      padding: 2px 12px;
+      border-radius: 30px;
+      background: var(--surface);
+      transition: 0.2s;
+    }
+    .toc a:hover { background: var(--gold); color: #0f0e0d; border-color: var(--gold); }
+
+    /* ACCORDION CARDS */
+    .accordion {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .accordion-header {
+      padding: 14px 18px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.03);
+      transition: 0.2s;
+      border-left: 5px solid var(--gold);
+      user-select: none;
+    }
+    .accordion-header:hover { background: rgba(255,255,255,0.07); }
+    .accordion-header .arrow { transition: 0.3s; font-size: 18px; }
+    .accordion.open .accordion-header .arrow { transform: rotate(180deg); }
+    .accordion-body {
+      padding: 0 18px 18px;
+      display: none;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .accordion.open .accordion-body { display: block; }
+    .accordion-body ul, .accordion-body ol {
+      padding-left: 22px;
+      margin: 6px 0;
+    }
+    .accordion-body li { margin-bottom: 4px; }
+    .accordion-body strong { color: var(--text); }
+    .highlight { color: var(--cyan); font-weight: 700; }
+    .danger { color: var(--red); font-weight: 700; }
+    .key { color: var(--gold); font-weight: 600; }
+    .info-highlight { color: var(--blue); font-weight: 600; }
+    .accent-border {
+      border-left: 3px solid var(--gold);
+      padding-left: 14px;
+      margin: 10px 0;
+      font-style: italic;
+    }
+    .badge-sm {
+      display: inline-block;
+      background: var(--bg);
+      padding: 0 10px;
+      border-radius: 30px;
+      font-size: 12px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      margin-right: 4px;
+    }
+
+    /* BACK TO TOP */
+    #backTop {
+      position: fixed;
+      bottom: 30px;
+      right: 24px;
+      background: var(--gold);
+      color: #0f0e0d;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(251,191,36,0.4);
+      transition: 0.3s;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 999;
+    }
+    #backTop.visible { opacity: 1; pointer-events: auto; }
+    #backTop:hover { transform: scale(1.08); background: #fcd34d; }
+
+    /* FOOTER */
+    .footer {
+      padding: 16px 22px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      letter-spacing: 0.04em;
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+      body { padding: 10px 8px 70px; }
+      .header { flex-direction: column; align-items: stretch; gap: 8px; }
+      .search-box { flex: 1; }
+      .tabs { padding: 10px 12px 0; gap: 4px; }
+      .tab-btn { font-size: 12px; padding: 8px 12px; }
+      .panels { padding: 12px 12px 6px; }
+      .accordion-header { font-size: 14px; padding: 12px 14px; }
+      .accordion-body { font-size: 14px; padding: 0 14px 14px; }
+      .legend { font-size: 11px; padding: 8px 14px; gap: 8px; }
+      .toc a { font-size: 11px; padding: 0 10px; }
+      #backTop { width: 44px; height: 44px; font-size: 20px; bottom: 16px; right: 16px; }
+    }
+    /* поисковая подсветка */
+    .found { background: rgba(251,191,36,0.25); border-radius: 4px; padding: 0 2px; }
+  </style>
 </head>
 <body>
-<div class="container">
-    <div class="cube-wrapper">
-        <div class="cube">
-            <div class="face">⚡</div>
-            <div class="face">⟡</div>
-            <div class="face">▣</div>
-            <div class="face">◈</div>
-            <div class="face">✦</div>
-            <div class="face">⏣</div>
+<div class="wrapper" id="app">
+  <header class="header">
+    <h1>Регламент лорников <small>Yufu.Su #2</small></h1>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Поиск по всем разделам..." />
+      <button id="searchBtn">Найти</button>
+    </div>
+  </header>
+
+  <div class="legend">
+    <span class="legend-item"><span class="legend-dot dot-gold"></span> Регламент</span>
+    <span class="legend-item"><span class="legend-dot dot-green"></span> Обязанности</span>
+    <span class="legend-item"><span class="legend-dot dot-red"></span> Взыскания</span>
+    <span class="legend-item"><span class="legend-dot dot-blue"></span> Информация</span>
+    <span class="legend-item"><span class="legend-dot dot-cyan"></span> Сроки / числа</span>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="reglament">📜 Регламент</button>
+    <button class="tab-btn" data-tab="duties">⚔️ Обязанности</button>
+    <button class="tab-btn" data-tab="penalties">⚖️ Взыскания</button>
+    <button class="tab-btn" data-tab="info">ℹ️ Информация</button>
+  </div>
+
+  <div class="panels" id="panelsContainer">
+    <!-- РЕГЛАМЕНТ -->
+    <div class="tab-panel active" data-panel="reglament">
+      <div class="toc">
+        <a href="#r-test">Испытательный срок</a>
+        <a href="#r-roll">/roll и no-roll</a>
+        <a href="#r-status">Статус</a>
+        <a href="#r-erp">ERP логика</a>
+        <a href="#r-general">Общие положения</a>
+      </div>
+
+      <div class="accordion open" id="r-test">
+        <div class="accordion-header"><span>Испытательный срок</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <ul>
+            <li>Длится <span class="highlight">две недели</span> с момента прохождения на лорного персонажа.</li>
+            <li>Выговор на испытательном сроке → <span class="danger">снятие + перм ЧС</span> лорных персонажей.</li>
+            <li>Отпуск продлевает срок <span class="key">1 к 1</span> (1 день отпуска = +1 день к ИС).</li>
+          </ul>
         </div>
+      </div>
+
+      <div class="accordion" id="r-roll">
+        <div class="accordion-header"><span>Команда /roll и no-roll</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <p>Полный регламент по /roll, no-roll для Хашир/Лун, правилам для ГГ, рангам и бонусам — на отдельном сайте:</p>
+          <p style="margin:8px 0;"><a href="https://whiteprinc3.github.io/rollsystem/" target="_blank" style="color:var(--cyan);font-weight:700;">→ whiteprinc3.github.io/rollsystem/</a></p>
+          <p><span class="badge-sm">Важно</span> Диапазон 0–100, бонусы за ранг, no roll для Столпов и Лун.</p>
+        </div>
+      </div>
+
+      <div class="accordion" id="r-status">
+        <div class="accordion-header"><span>Правила статуса</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <ul>
+            <li>Статус ≠ вседозволенность. Действия должны быть логичны и по канону.</li>
+            <li>За нелогичные/нарушающие баланс действия — наказание.</li>
+            <li><span class="danger">Запрещено</span> злоупотреблять /roll: после <span class="highlight">2 неудач подряд</span> — пауза <span class="highlight">3 минуты</span>.</li>
+          </ul>
+          <div class="accent-border">/roll — инструмент честного исхода, а не способ избежать отыгровки.</div>
+        </div>
+      </div>
+
+      <div class="accordion" id="r-erp">
+        <div class="accordion-header"><span>ERP логика</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <ul>
+            <li>Соблюдать канон пар (Обанай–Мицури, Танджиро–Канао и др.). <strong>Исключение:</strong> если у вас нет канон пары — можно с обычным игроком.</li>
+            <li>Лорникам <span class="key">до 18 лет</span> — <span class="danger">запрет ERP</span>.</li>
+            <li>ERP только с противоположным полом.</li>
+            <li>В личных домах — разрешено нарушение канон пары.</li>
+            <li>Соблюдать логику развития отношений.</li>
+            <li><span class="danger">Запрещено</span> доводить до заведения детей (секс без рождения детей).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="accordion" id="r-general">
+        <div class="accordion-header"><span>Общие положения (1.1 – 1.27)</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <ul>
+            <li><strong>1.1</strong> Нельзя стоять на двух серверах одновременно на наборных лорниках.</li>
+            <li><strong>1.2</strong> Рецидив → увеличение наказания.</li>
+            <li><strong>1.3 – 1.5</strong> Чётко выполнять указания РП состава, лидера фракции и свои обязанности.</li>
+            <li><strong>1.6</strong> Отыгрывать квоту в онлайне, <span class="danger">запрещено</span> AFK-отыгровка.</li>
+            <li><strong>1.7</strong> Соблюдать правила Discord-сервера (наказание может прийти оттуда).</li>
+            <li><strong>1.8</strong> Квота учитывается с <span class="highlight">17:00 до 00:00 МСК</span>.</li>
+            <li><strong>1.9</strong> Запрещена махинация с правилами и поиск дыр.</li>
+            <li><strong>1.10</strong> Столпы/Луны контролируют состав; массовые нарушения — пресекать.</li>
+            <li><strong>1.11</strong> Изменения Discord-сервера — только с оповещением РП-персонала.</li>
+            <li><strong>1.12</strong> Запрещено перемещаться между фракциями, если есть лорник (искл. второстепенные).</li>
+            <li><strong>1.13 – 1.26</strong> РП состав имеет право на наказания, мониторинг, вмешательство, обнуление ивентов, аннулирование отчётности, запрос информации, проверки, временные ограничения, координацию с лидерами, приоритет регламента, предотвращение конфликтов.</li>
+            <li><strong>1.27</strong> Если вы использовали второй слот во фракции (например, демоны) — не можете восстановиться в истребителях. Если не использовали — можете после снятия.</li>
+          </ul>
+          <div class="accent-border">Решения РП состава обязательны к исполнению.</div>
+        </div>
+      </div>
     </div>
 
-    <div class="terminal">
-        <div class="terminal-header">
-            <span></span><span></span><span></span>
-            <span style="margin-left: auto; color:#3a5a6a; font-size:13px;">ROCKET::TERM</span>
+    <!-- ОБЯЗАННОСТИ -->
+    <div class="tab-panel" data-panel="duties">
+      <div class="toc">
+        <a href="#d-prime">Prime-Time</a>
+        <a href="#d-leaders">Лидеры</a>
+        <a href="#d-pillars">Столпы/Луны</a>
+        <a href="#d-heroes">Главные герои</a>
+        <a href="#d-second">Вторые профессии</a>
+        <a href="#d-behavior">Поведение</a>
+        <a href="#d-report">Отчётность</a>
+        <a href="#d-afk">AFK</a>
+      </div>
+
+      <div class="accordion open" id="d-prime">
+        <div class="accordion-header"><span>Prime-Time (Столпы, Луны, ГГ)</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <ul>
+            <li>Ежедневно <span class="highlight">17:00–00:00</span> — присутствие на сервере <span class="highlight">90 минут</span> активного времени.</li>
+            <li>Столпы/Луны: активность max, AFK с оповещением в OOC/Asay — максимум <span class="highlight">30 минут</span>.</li>
+            <li>Главные герои — активность в полном масштабе.</li>
+            <li>Ежедневно: скриншот в ветку онлайна, отчётность по критериям.</li>
+          </ul>
         </div>
-        <div id="output">> Добро пожаловать в ROCKET-терминал<br>> Введите команду: <span class="glow-text">help</span></div>
-        <div class="input-line">
-            <span>$</span>
-            <input type="text" id="cmd" placeholder="введите команду..." autofocus>
+      </div>
+
+      <div class="accordion" id="d-leaders">
+        <div class="accordion-header"><span>Лидеры фракций</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <p><strong>Задачи:</strong> порядок, активности, устав, помощь игрокам, споры, задачи от РП состава.</p>
+          <p><strong>Ежемесячно:</strong></p>
+          <ul>
+            <li>Помощь в межфракционных событиях.</li>
+            <li>Контроль фракционных событий.</li>
+            <li>Отчёт по обязанностям РП куратору в конце месяца.</li>
+          </ul>
+          <div class="accent-border">Квота — допустимая деятельность (ивенты, тренировки, РП). <span class="danger">Запрещено</span> фабриковать отчёты. Участие в чужих мероприятиях — 50%.</div>
         </div>
-        <div class="footer-note">[ v.20.05.2026 ]</div>
+      </div>
+
+      <div class="accordion" id="d-pillars">
+        <div class="accordion-header"><span>Столпы и демоны 12 лун</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <p><strong>Задачи:</strong> порядок, активности, работа с составом, помощь, задачи от РП и лидера, актуальная информация по дыханию/отряду.</p>
+          <p><strong>Раз в две недели:</strong></p>
+          <ul>
+            <li>Участие в межфракционном/глобальном РП событии раз в месяц или фракционное событие для <span class="info-highlight">8+ человек</span>.</li>
+            <li>Два события для всей фракции.</li>
+            <li>Квота: <span class="info-highlight">18 скринов</span> за две недели (события + активность отдельно).</li>
+            <li>Отправка отчётов по истечении двух недель в специальный канал Discord.</li>
+          </ul>
+          <div class="accent-border">Запрещено фабриковать отчётность. Чужие мероприятия — 50%.</div>
+        </div>
+      </div>
+
+      <div class="accordion" id="d-heroes">
+        <div class="accordion-header"><span>Главные герои</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <p><strong>Задачи:</strong> создание активностей и РП.</p>
+          <p><strong>Раз в две недели:</strong> <span class="info-highlight">18 скринов</span> отчётности, отправка в канал. Те же правила по допустимой деятельности и запрету фабрикации.</p>
+        </div>
+      </div>
+
+      <div class="accordion" id="d-second">
+        <div class="accordion-header"><span>Вторые профессии (только Луны/Столпы)</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <p><strong>Истребители:</strong> столпы могут вступать в любое открытое дыхание или закрытое (искл. донатные). Одобрение — высшая администрация.</p>
+          <p><strong>Демоны:</strong> луны — любой отряд или профа не выше демона низшей магии крови (искл. донатные отряды). Одобрение — высшая администрация.</p>
+          <div class="accent-border"><span class="key">Важно:</span> вторая профессия только после основной квоты. Отпуск = полное отсутствие. При выговоре — нельзя переключаться (искл. донат модель/лорник).</div>
+        </div>
+      </div>
+
+      <div class="accordion" id="d-behavior">
+        <div class="accordion-header"><span>Правила поведения</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <ul>
+            <li><strong>2.</strong> Запрещено злоупотребление полномочиями, «душка»/«слив» игроков.</li>
+            <li><strong>2.1.</strong> Пример другим: без грубости вне РП, качественный отыгрыш.</li>
+            <li><strong>2.2.</strong> Конфликты — через РП состав. NonRP запрещён.</li>
+            <li><strong>2.3.</strong> Макс. выговоры во фракции → выговор на лорного персонажа.</li>
+            <li><strong>2.4.</strong> Запрещено провоцировать OOC-конфликты и переносить личное в игру.</li>
+            <li><strong>2.5.</strong> Уважительный тон к игрокам и составу.</li>
+            <li><strong>2.6.</strong> Решения РП состава и лидера обязательны к исполнению.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="accordion" id="d-report">
+        <div class="accordion-header"><span>Отчётность наборных лорников</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <ul>
+            <li><strong>3.</strong> Отчётность строго по концепту, в срок. <span class="danger">Запрещено</span> фабриковать, закрывать всё за <span class="highlight">3 дня</span>, использовать обработанные скрины.</li>
+            <li><strong>3.1.</strong> С одной ситуации — максимум <span class="info-highlight">2 скрина</span>.</li>
+            <li><strong>3.2.</strong> КД между скринами — <span class="highlight">15+ минут</span>.</li>
+            <li><strong>3.3.</strong> На каждом скрине — полный HUD.</li>
+            <li><strong>3.4.</strong> На каждом скрине — видно время.</li>
+            <li><strong>3.5.</strong> На каждом скрине — ваш персонаж.</li>
+            <li><strong>3.6.</strong> Макс. скринов на активность в Discord — <span class="info-highlight">3</span>.</li>
+            <li><strong>3.7.</strong> Макс. скринов на мероприятия (2) — <span class="info-highlight">6</span>.</li>
+            <li><strong>3.8.</strong> Макс. скринов на захваты — <span class="info-highlight">2</span>.</li>
+            <li><strong>3.9.</strong> Отчёт по обязательным ивентам: <span class="info-highlight">3 скрина</span> (оповещение, сбор/инструктаж, процесс/завершение).</li>
+            <li><strong>3.10.</strong> Мероприятие/тренировка = <span class="info-highlight">0.5</span> за троих участников.</li>
+            <li><strong>3.11.</strong> Мероприятие/тренировка = <span class="info-highlight">1</span> за двоих участников.</li>
+            <li><strong>3.12.</strong> Подделка или нарушения оформления → аннулирование РП составом.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="accordion" id="d-afk">
+        <div class="accordion-header"><span>AFK на лорных персонажах</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <ul>
+            <li><strong>4.</strong> Макс. общее время AFK — <span class="highlight">30 минут</span>.</li>
+            <li><strong>4.1.</strong> Перед AFK — оповестить в ООС чат, на сколько уходите.</li>
+            <li><strong>4.2.</strong> <span class="danger">Запрещено</span> уходить в AFK на видных местах.</li>
+          </ul>
+        </div>
+      </div>
     </div>
+
+    <!-- ВЗЫСКАНИЯ -->
+    <div class="tab-panel" data-panel="penalties">
+      <div class="toc">
+        <a href="#p-types">Виды взысканий</a>
+        <a href="#p-workoff">Отработка</a>
+        <a href="#p-chs">ЧС лорников</a>
+        <a href="#p-leave">Отпуска</a>
+      </div>
+
+      <div class="accordion open" id="p-types">
+        <div class="accordion-header"><span>Виды взысканий</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <p><strong>Выговор</strong> — за нарушение правил, регламентов или невыполнение квот.</p>
+          <ul>
+            <li><span class="key">Обычный</span> — стандартные нарушения.</li>
+            <li><span class="danger">Перманентный</span> — серьёзные нарушения или рецидив. Отработка через <span class="highlight">2 месяца</span> при хорошем поведении.</li>
+          </ul>
+          <p><span class="badge-sm">Санкции за обычный выговор</span> запрет второй профессии после квоты; норма онлайна — <span class="highlight">2 часа</span>.</p>
+          <p><strong>Предупреждение</strong> — за незначительные нарушения. Слетает через <span class="highlight">неделю</span>, санкций нет.</p>
+        </div>
+      </div>
+
+      <div class="accordion" id="p-workoff">
+        <div class="accordion-header"><span>Отработка взысканий</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <ul>
+            <li>Отработка выговора — задание от РП состава, возможно через <span class="key">3 дня</span> после получения.</li>
+            <li>Предупреждения снимаются автоматически через неделю.</li>
+            <li>Перманентные выговоры — отработка через <span class="key">3 месяца</span> при одобрении РП-куратора.</li>
+            <li><span class="danger">Срок на отработку выговора — неделя</span>, иначе он становится перманентным.</li>
+            <li>Активный отпуск: +1 день (или по числу дней отпуска) к времени на отработку. Абуз отпуска → перм выговор, отработка через <span class="key">4 месяца</span>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="accordion" id="p-chs">
+        <div class="accordion-header"><span>ЧС лорников (снятие)</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <p><strong>1. Снятие после испытательного срока:</strong> сразу — <span class="danger">ЧС <span class="highlight">1 месяц</span></span>; через время без выговоров — <span class="danger">ЧС <span class="highlight">5 дней</span></span>.</p>
+          <p><strong>2. Снятие с выговорами:</strong></p>
+          <ul>
+            <li><span class="info-highlight">1</span> выговор → <span class="danger">ЧС <span class="highlight">3 мес.</span></span></li>
+            <li><span class="info-highlight">2</span> выговора → <span class="danger">ЧС <span class="highlight">6 мес.</span></span></li>
+            <li><span class="info-highlight">3</span> выговора → <span class="danger">перм ЧС</span></li>
+          </ul>
+          <p><strong>3. Снятие без двухнедельного отчёта:</strong></p>
+          <ul>
+            <li>На испытательном → <span class="danger">перм ЧС</span></li>
+            <li>С <span class="info-highlight">1</span> выговором → от <span class="highlight">3 мес.</span></li>
+            <li>С <span class="info-highlight">2</span> выговорами → от <span class="highlight">6 мес.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="accordion" id="p-leave">
+        <div class="accordion-header"><span>Отпуска</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <ul>
+            <li>Макс. отпуск <span class="highlight">1 неделя</span>; КД на отпуск — <span class="highlight">3 недели</span> (искл. семейные обстоятельства).</li>
+            <li>Норма онлайна только в прайм-тайм. Не успели → отпуск «отдых/устал» принимается до <span class="highlight">18:30</span>, после отклоняется.</li>
+            <li>Отпуск = полное отсутствие на сервере. Заход на любой сервер → аннулирование отпуска.</li>
+            <li>Отпуск скидывать в ветку лорного персонажа.</li>
+            <li><span class="danger">Важно:</span> отпуск «отдых», но играете на первом для квоты, или «болеете» и играете — отпуск аннулируется + наказание за квоту.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ИНФОРМАЦИЯ -->
+    <div class="tab-panel" data-panel="info">
+      <div class="toc">
+        <a href="#i-general">Общая информация</a>
+        <a href="#i-timeline">Временные рамки</a>
+        <a href="#i-staff">Отвечающие</a>
+      </div>
+
+      <div class="accordion open" id="i-general">
+        <div class="accordion-header"><span>Общая информация</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <ul>
+            <li>Вопросы по лорникам — через РП-персонал.</li>
+            <li>Отчётность ежедневно в ветки Discord.</li>
+            <li>Следить за объявлениями в официальном Discord проекта.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="accordion" id="i-timeline">
+        <div class="accordion-header"><span>Временные рамки (лор)</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <p>Действие — промежуток <span class="key">перед/после горы Натагума</span>. Учитывать при отыгрыше возможностей.</p>
+          <p>Главные герои не в пиковой силе, особенно на испытательном сроке. По мере получения статуса «киноэ» — положение может меняться.</p>
+          <p>Не ссылаться на арки манги — у нас не та арка. Учитывать механику сервера (Танджиро с «танцем бога огня», Незуко с магией крови и берсерком).</p>
+        </div>
+      </div>
+
+      <div class="accordion" id="i-staff">
+        <div class="accordion-header"><span>Отвечающие за лорников</span><span class="arrow">▾</span></div>
+        <div class="accordion-body">
+          <ul>
+            <li>РП Куратор</li>
+            <li>Деп. РП Куратор (демоны)</li>
+            <li>Деп. РП Куратор (истребители)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    © 2025 Лорники Yufu.Su #2 · ROCKET-версия · Все права защищены
+  </footer>
 </div>
 
+<button id="backTop" aria-label="Наверх">↑</button>
+
 <script>
-    (function() {
-        const output = document.getElementById('output');
-        const input = document.getElementById('cmd');
-        const history = [];
-        let historyIndex = -1;
+  (function() {
+    // 1. Табы
+    const btns = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.tab-panel');
+    const container = document.getElementById('panelsContainer');
+    function showTab(id) {
+      btns.forEach(b => b.classList.toggle('active', b.dataset.tab === id));
+      panels.forEach(p => p.classList.toggle('active', p.dataset.panel === id));
+      // закрываем все аккордеоны в скрытых панелях (для чистоты), но лучше оставить как есть
+    }
+    btns.forEach(b => b.addEventListener('click', function(e) {
+      showTab(this.dataset.tab);
+      // сброс поиска при смене вкладки
+      document.getElementById('searchInput').value = '';
+      clearHighlights();
+    }));
 
-        // Доступные команды
-        const commands = {
-            help: () => {
-                return [
-                    'Доступные команды:',
-                    '  help        — это сообщение',
-                    '  echo <текст> — вывести текст',
-                    '  cube        — изменить цвет куба (random)',
-                    '  clear       — очистить терминал',
-                    '  whoami      — ROCKET core',
-                    '  date        — текущее время по UTC',
-                    '  calc <выр>  — вычислить выражение (+, -, *, /)',
-                    '  spin        — ускорить/замедлить вращение куба',
-                    '  exit        — завершить сессию (имитация)'
-                ].join('\n');
-            },
-            echo: (args) => args.length ? args.join(' ') : '> ошибка: укажите текст',
-            cube: () => {
-                const r = Math.floor(Math.random() * 256);
-                const g = Math.floor(Math.random() * 256);
-                const b = Math.floor(Math.random() * 256);
-                const color = `rgb(${r},${g},${b})`;
-                document.querySelectorAll('.cube .face').forEach(el => {
-                    el.style.borderColor = color;
-                    el.style.boxShadow = `0 0 40px ${color}, inset 0 0 40px ${color}`;
-                    el.style.color = color;
-                    el.style.textShadow = `0 0 20px ${color}`;
-                });
-                return `> цвет куба изменён на ${color}`;
-            },
-            clear: () => { output.innerHTML = ''; return null; },
-            whoami: () => '> ROCKET · версия 1.0 · дата создания 20.05.2026',
-            date: () => `> ${new Date().toUTCString()}`,
-            calc: (args) => {
-                if (!args.length) return '> ошибка: введите выражение';
-                const expr = args.join(' ');
-                try {
-                    const result = Function(`"use strict"; return (${expr})`)();
-                    if (typeof result !== 'number' || !isFinite(result)) throw new Error();
-                    return `> ${expr} = ${result}`;
-                } catch(e) {
-                    return `> ошибка вычисления: "${expr}"`;
-                }
-            },
-            spin: () => {
-                const cube = document.querySelector('.cube');
-                const current = cube.style.animationDuration || '12s';
-                let sec = parseFloat(current) || 12;
-                sec = sec < 2 ? 12 : (sec > 30 ? 4 : sec * 0.7);
-                if (sec < 2) sec = 2;
-                cube.style.animationDuration = sec + 's';
-                return `> скорость вращения: ${sec.toFixed(1)}с на оборот`;
-            },
-            exit: () => {
-                output.innerHTML += '\n> сессия завершена. перезагрузка...';
-                setTimeout(() => {
-                    output.innerHTML = '> Добро пожаловать в ROCKET-терминал<br>> Введите команду: <span class="glow-text">help</span>';
-                }, 800);
-                return null;
+    // 2. Аккордеоны
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', function() {
+        const accordion = this.parentElement;
+        accordion.classList.toggle('open');
+      });
+    });
+
+    // 3. Поиск по всем текстовым узлам внутри .tab-panel (без тегов)
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+
+    function clearHighlights() {
+      document.querySelectorAll('.found').forEach(el => {
+        const parent = el.parentNode;
+        parent.replaceChild(document.createTextNode(el.textContent), el);
+        parent.normalize();
+      });
+    }
+
+    function performSearch() {
+      clearHighlights();
+      const query = searchInput.value.trim().toLowerCase();
+      if (!query) return;
+
+      // ищем во всех панелях
+      const allPanels = document.querySelectorAll('.tab-panel');
+      let foundAny = false;
+      allPanels.forEach(panel => {
+        // проходим по текстовым узлам внутри .accordion-body
+        const bodies = panel.querySelectorAll('.accordion-body');
+        bodies.forEach(body => {
+          const walker = document.createTreeWalker(body, NodeFilter.SHOW_TEXT, null, false);
+          const nodes = [];
+          let node;
+          while (node = walker.nextNode()) {
+            if (node.textContent.toLowerCase().includes(query)) {
+              nodes.push(node);
             }
-        };
-
-        function appendLine(text) {
-            if (text === null || text === undefined) return;
-            const lines = text.split('\n');
-            lines.forEach(line => {
-                const p = document.createElement('div');
-                p.style.margin = '2px 0';
-                p.innerHTML = line;
-                output.appendChild(p);
-            });
-            output.scrollTop = output.scrollHeight;
-        }
-
-        function processCommand(cmdLine) {
-            const trimmed = cmdLine.trim();
-            if (!trimmed) return;
-
-            // сохраняем в историю
-            history.push(trimmed);
-            historyIndex = history.length;
-
-            // разделяем на команду и аргументы
-            const parts = trimmed.match(/(?:[^\s"']+|"[^"]*"|'[^']*')+/g);
-            if (!parts) return;
-            const cmd = parts[0].toLowerCase();
-            const args = parts.slice(1).map(arg => arg.replace(/^["']|["']$/g, ''));
-
-            // выводим ввод
-            appendLine(`> ${trimmed}`);
-
-            // выполняем
-            let result = null;
-            if (commands[cmd]) {
-                result = commands[cmd](args);
-            } else {
-                result = `> неизвестная команда: "${cmd}". Введите help`;
-            }
-            if (result !== null) appendLine(result);
-        }
-
-        // Обработка ввода
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                const val = input.value;
-                processCommand(val);
-                input.value = '';
-                // автофокус
-                setTimeout(() => input.focus(), 10);
-            }
-            if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                if (history.length > 0) {
-                    historyIndex = Math.max(0, historyIndex - 1);
-                    input.value = history[historyIndex] || '';
-                }
-            }
-            if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                if (historyIndex < history.length - 1) {
-                    historyIndex = Math.min(history.length - 1, historyIndex + 1);
-                    input.value = history[historyIndex] || '';
-                } else {
-                    historyIndex = history.length;
-                    input.value = '';
-                }
-            }
+          }
+          nodes.forEach(textNode => {
+            const text = textNode.textContent;
+            const idx = text.toLowerCase().indexOf(query);
+            if (idx === -1) return;
+            const span = document.createElement('span');
+            span.className = 'found';
+            const before = text.slice(0, idx);
+            const match = text.slice(idx, idx + query.length);
+            const after = text.slice(idx + query.length);
+            const frag = document.createDocumentFragment();
+            if (before) frag.appendChild(document.createTextNode(before));
+            const mark = document.createElement('span');
+            mark.className = 'found';
+            mark.textContent = match;
+            frag.appendChild(mark);
+            if (after) frag.appendChild(document.createTextNode(after));
+            textNode.parentNode.replaceChild(frag, textNode);
+            foundAny = true;
+          });
         });
+      });
 
-        // Фокус при клике на терминал
-        document.querySelector('.terminal').addEventListener('click', () => {
-            input.focus();
-        });
+      // если ничего не найдено — показываем в консоли (не мешаем)
+      if (!foundAny) {
+        // можно показать уведомление, но проще — тихо
+        console.log('Ничего не найдено');
+      }
+    }
 
-        // Стартовое сообщение в консоли (для отладки)
-        console.log('ROCKET терминал загружен. Введите help');
-    })();
+    searchBtn.addEventListener('click', performSearch);
+    searchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') performSearch();
+    });
+
+    // 4. Кнопка "Наверх"
+    const backTop = document.getElementById('backTop');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 300) {
+        backTop.classList.add('visible');
+      } else {
+        backTop.classList.remove('visible');
+      }
+    });
+    backTop.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // 5. Стартовое состояние: все аккордеоны открыты (уже есть .open у первых)
+    // дополнительно: если хотим все открыть — раскомментировать:
+    // document.querySelectorAll('.accordion').forEach(a => a.classList.add('open'));
+  })();
 </script>
 </body>
 </html>
