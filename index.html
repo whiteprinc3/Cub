@@ -3,40 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
-  <title>Регламент лорников · ROCKET · Эффекты</title>
+  <title>Регламент лорников · ROCKET</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg-start: #0f0e0d;
-      --bg-end: #1a0f1a;
-      --glass-bg: rgba(255,255,255,0.04);
-      --glass-border: rgba(255,255,255,0.08);
+      --bg: #0f0e0d;
+      --bg-card: #1a1715;
+      --surface: #24211e;
       --text: #f0edea;
       --muted: #b0aaa4;
+      --border: #3a3530;
       --gold: #fbbf24;
       --green: #6ee7b7;
       --red: #f87171;
       --blue: #93c5fd;
       --cyan: #22d3ee;
       --purple: #c084fc;
-      --pink: #f472b6;
-      --radius: 16px;
-      --shadow: 0 20px 60px rgba(0,0,0,0.7);
+      --radius: 14px;
+      --shadow: 0 12px 40px rgba(0,0,0,0.7);
       --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
     }
     body {
-      background: var(--bg-start);
+      background: var(--bg);
       color: var(--text);
       font-family: var(--font);
       min-height: 100vh;
-      padding: 20px 16px 60px;
+      padding: 20px 16px 100px;
       display: flex;
       justify-content: center;
       line-height: 1.6;
       position: relative;
       overflow-x: hidden;
     }
-    /* ===== ДИНАМИЧЕСКИЙ ГРАДИЕНТНЫЙ ФОН ===== */
     #gradient-bg {
       position: fixed;
       top: 0;
@@ -46,7 +44,7 @@
       z-index: 0;
       background: linear-gradient(135deg, #0f0e0d, #1a0f1a, #0d1a1a, #1a0f1a);
       background-size: 400% 400%;
-      animation: gradientMove 12s ease-in-out infinite alternate;
+      animation: gradientMove 16s ease-in-out infinite alternate;
     }
     @keyframes gradientMove {
       0% { background-position: 0% 0%; }
@@ -55,8 +53,6 @@
       75% { background-position: 0% 100%; }
       100% { background-position: 0% 0%; }
     }
-
-    /* ===== ПЛАВАЮЩИЕ ГЕОМЕТРИЧЕСКИЕ ФИГУРЫ ===== */
     .floating-shapes {
       position: fixed;
       top: 0;
@@ -70,15 +66,14 @@
     .shape {
       position: absolute;
       border-radius: 50%;
-      opacity: 0.08;
-      animation: floatShape 20s infinite alternate ease-in-out;
+      opacity: 0.06;
+      animation: floatShape 22s infinite alternate ease-in-out;
     }
     .shape:nth-child(1) { width: 200px; height: 200px; background: var(--gold); top: 10%; left: 5%; animation-duration: 18s; }
-    .shape:nth-child(2) { width: 150px; height: 150px; background: var(--pink); bottom: 15%; right: 8%; animation-duration: 22s; animation-delay: 2s; }
+    .shape:nth-child(2) { width: 150px; height: 150px; background: var(--purple); bottom: 15%; right: 8%; animation-duration: 22s; animation-delay: 2s; }
     .shape:nth-child(3) { width: 100px; height: 100px; background: var(--cyan); top: 50%; left: 80%; animation-duration: 16s; animation-delay: 4s; border-radius: 30% 70% 50% 50% / 30% 40% 60% 70%; }
-    .shape:nth-child(4) { width: 80px; height: 80px; background: var(--purple); bottom: 30%; left: 10%; animation-duration: 20s; animation-delay: 1s; border-radius: 40% 60% 30% 70% / 50% 40% 60% 50%; }
-    .shape:nth-child(5) { width: 120px; height: 120px; background: var(--green); top: 20%; right: 20%; animation-duration: 24s; animation-delay: 3s; border-radius: 20% 80% 40% 60% / 70% 30% 70% 30%; }
-    .shape:nth-child(6) { width: 60px; height: 60px; background: var(--red); top: 70%; left: 50%; animation-duration: 14s; animation-delay: 5s; border-radius: 50%; }
+    .shape:nth-child(4) { width: 80px; height: 80px; background: var(--green); bottom: 30%; left: 10%; animation-duration: 20s; animation-delay: 1s; border-radius: 40% 60% 30% 70% / 50% 40% 60% 50%; }
+    .shape:nth-child(5) { width: 120px; height: 120px; background: var(--pink); top: 20%; right: 20%; animation-duration: 24s; animation-delay: 3s; border-radius: 20% 80% 40% 60% / 70% 30% 70% 30%; }
     @keyframes floatShape {
       0% { transform: translate(0, 0) scale(1) rotate(0deg); }
       25% { transform: translate(40px, -60px) scale(1.1) rotate(90deg); }
@@ -86,28 +81,24 @@
       75% { transform: translate(50px, 40px) scale(1.05) rotate(270deg); }
       100% { transform: translate(-20px, -30px) scale(1) rotate(360deg); }
     }
-
-    /* ===== ОСНОВНОЙ КОНТЕЙНЕР ===== */
     .wrapper {
       position: relative;
       z-index: 1;
       max-width: 1100px;
       width: 100%;
-      background: var(--glass-bg);
-      backdrop-filter: blur(24px) saturate(1.2);
-      -webkit-backdrop-filter: blur(24px) saturate(1.2);
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(20px) saturate(1.2);
+      -webkit-backdrop-filter: blur(20px) saturate(1.2);
       border-radius: var(--radius);
-      border: 1px solid var(--glass-border);
-      box-shadow: var(--shadow), 0 0 80px rgba(251,191,36,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: var(--shadow);
       overflow: hidden;
       padding: 0 0 20px;
     }
-
-    /* ===== ШАПКА С ПУЛЬСИРУЮЩЕЙ ТОЧКОЙ ===== */
     .header {
       padding: 18px 22px;
       background: rgba(0,0,0,0.3);
-      border-bottom: 1px solid var(--glass-border);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -125,7 +116,6 @@
       font-weight: 700;
       letter-spacing: 0.02em;
       color: var(--text);
-      text-shadow: 0 0 40px rgba(251,191,36,0.15);
     }
     .header h1 small {
       font-size: 14px;
@@ -139,13 +129,13 @@
       height: 10px;
       border-radius: 50%;
       background: var(--green);
-      box-shadow: 0 0 20px rgba(110,231,183,0.5);
+      box-shadow: 0 0 20px rgba(110,231,183,0.4);
       animation: pulseDot 1.8s ease-in-out infinite;
       margin-right: 6px;
     }
     @keyframes pulseDot {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.7); }
+      50% { opacity: 0.3; transform: scale(0.7); }
     }
     .quote-of-day {
       font-size: 13px;
@@ -155,17 +145,16 @@
       border-left: 2px solid var(--pink);
       background: rgba(244,114,182,0.06);
       border-radius: 0 var(--radius) var(--radius) 0;
-      max-width: 280px;
+      max-width: 320px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      text-shadow: 0 0 30px rgba(244,114,182,0.1);
     }
     .search-box {
       display: flex;
       gap: 6px;
       background: rgba(0,0,0,0.4);
-      border: 1px solid var(--glass-border);
+      border: 1px solid rgba(255,255,255,0.08);
       border-radius: 40px;
       padding: 4px 4px 4px 16px;
       align-items: center;
@@ -195,18 +184,16 @@
       cursor: pointer;
       transition: 0.3s;
       white-space: nowrap;
-      box-shadow: 0 0 30px rgba(251,191,36,0.15);
     }
-    .search-box button:hover { transform: scale(0.97); box-shadow: 0 0 50px rgba(251,191,36,0.3); }
+    .search-box button:hover { transform: scale(0.97); }
 
-    /* ===== ЛЕГЕНДА ===== */
     .legend {
       display: flex;
       flex-wrap: wrap;
       gap: 12px 20px;
       padding: 12px 22px;
       background: rgba(0,0,0,0.2);
-      border-bottom: 1px solid var(--glass-border);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
       font-size: 13px;
       color: var(--muted);
     }
@@ -216,23 +203,20 @@
       width: 12px;
       height: 12px;
       border-radius: 4px;
-      box-shadow: 0 0 12px currentColor;
     }
-    .dot-gold { background: var(--gold); color: var(--gold); }
-    .dot-green { background: var(--green); color: var(--green); }
-    .dot-red { background: var(--red); color: var(--red); }
-    .dot-blue { background: var(--blue); color: var(--blue); }
-    .dot-cyan { background: var(--cyan); color: var(--cyan); }
-    .dot-purple { background: var(--purple); color: var(--purple); }
-    .dot-pink { background: var(--pink); color: var(--pink); }
+    .dot-gold { background: var(--gold); }
+    .dot-green { background: var(--green); }
+    .dot-red { background: var(--red); }
+    .dot-blue { background: var(--blue); }
+    .dot-cyan { background: var(--cyan); }
+    .dot-purple { background: var(--purple); }
 
-    /* ===== ВКЛАДКИ ===== */
     .tabs {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
       padding: 14px 22px 0;
-      border-bottom: 1px solid var(--glass-border);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
     .tab-btn {
       padding: 10px 20px;
@@ -245,33 +229,30 @@
       cursor: pointer;
       transition: 0.3s;
       border-bottom: 3px solid transparent;
-      position: relative;
     }
     .tab-btn:hover { color: var(--text); background: rgba(255,255,255,0.04); }
     .tab-btn.active {
       color: var(--text);
       background: rgba(255,255,255,0.06);
       border-bottom-color: var(--gold);
-      text-shadow: 0 0 30px rgba(251,191,36,0.2);
     }
-    .tab-btn[data-tab="duties"].active { border-bottom-color: var(--green); text-shadow: 0 0 30px rgba(110,231,183,0.2); }
-    .tab-btn[data-tab="penalties"].active { border-bottom-color: var(--red); text-shadow: 0 0 30px rgba(248,113,113,0.2); }
-    .tab-btn[data-tab="info"].active { border-bottom-color: var(--blue); text-shadow: 0 0 30px rgba(147,197,253,0.2); }
-    .tab-btn[data-tab="sensou"].active { border-bottom-color: var(--purple); text-shadow: 0 0 30px rgba(192,132,252,0.2); }
-    .tab-btn[data-tab="bonus"].active { border-bottom-color: var(--pink); text-shadow: 0 0 30px rgba(244,114,182,0.2); }
+    .tab-btn[data-tab="duties"].active { border-bottom-color: var(--green); }
+    .tab-btn[data-tab="penalties"].active { border-bottom-color: var(--red); }
+    .tab-btn[data-tab="info"].active { border-bottom-color: var(--blue); }
+    .tab-btn[data-tab="sensou"].active { border-bottom-color: var(--purple); }
+    .tab-btn[data-tab="facts"].active { border-bottom-color: var(--cyan); }
 
     .panels { padding: 18px 22px 10px; }
-    .tab-panel { display: none; animation: fade 0.4s ease; }
+    .tab-panel { display: none; animation: fade 0.35s ease; }
     .tab-panel.active { display: block; }
-    @keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ===== ОГЛАВЛЕНИЕ ===== */
     .toc {
       display: flex;
       flex-wrap: wrap;
       gap: 6px 14px;
       padding: 10px 0 16px;
-      border-bottom: 1px dashed var(--glass-border);
+      border-bottom: 1px dashed rgba(255,255,255,0.08);
       margin-bottom: 18px;
     }
     .toc a {
@@ -279,23 +260,20 @@
       text-decoration: none;
       font-size: 13px;
       font-weight: 500;
-      border: 1px solid var(--glass-border);
+      border: 1px solid rgba(255,255,255,0.08);
       padding: 2px 14px;
       border-radius: 30px;
       background: rgba(0,0,0,0.2);
       transition: 0.3s;
-      backdrop-filter: blur(4px);
     }
-    .toc a:hover { background: rgba(251,191,36,0.15); color: var(--gold); border-color: var(--gold); box-shadow: 0 0 30px rgba(251,191,36,0.1); }
+    .toc a:hover { background: rgba(251,191,36,0.12); color: var(--gold); border-color: var(--gold); }
 
-    /* ===== АККОРДЕОНЫ ===== */
     .accordion {
       background: rgba(0,0,0,0.25);
-      border: 1px solid var(--glass-border);
+      border: 1px solid rgba(255,255,255,0.06);
       border-radius: var(--radius);
       margin-bottom: 14px;
       overflow: hidden;
-      backdrop-filter: blur(8px);
       transition: 0.3s;
     }
     .accordion:hover { border-color: rgba(255,255,255,0.12); }
@@ -311,7 +289,6 @@
       transition: 0.3s;
       border-left: 5px solid var(--gold);
       user-select: none;
-      text-shadow: 0 0 20px rgba(251,191,36,0.05);
     }
     .accordion-header:hover { background: rgba(255,255,255,0.05); }
     .accordion-header .arrow { transition: 0.3s; font-size: 18px; }
@@ -329,17 +306,17 @@
     }
     .accordion-body li { margin-bottom: 4px; }
     .accordion-body strong { color: var(--text); }
-    .highlight { color: var(--cyan); font-weight: 700; text-shadow: 0 0 20px rgba(34,211,238,0.15); }
-    .danger { color: var(--red); font-weight: 700; text-shadow: 0 0 20px rgba(248,113,113,0.15); }
-    .key { color: var(--gold); font-weight: 600; text-shadow: 0 0 20px rgba(251,191,36,0.1); }
-    .info-highlight { color: var(--blue); font-weight: 600; text-shadow: 0 0 20px rgba(147,197,253,0.1); }
-    .sensou-highlight { color: var(--purple); font-weight: 700; text-shadow: 0 0 20px rgba(192,132,252,0.15); }
+    .highlight { color: var(--cyan); font-weight: 700; }
+    .danger { color: var(--red); font-weight: 700; }
+    .key { color: var(--gold); font-weight: 600; }
+    .info-highlight { color: var(--blue); font-weight: 600; }
+    .sensou-highlight { color: var(--purple); font-weight: 700; }
     .accent-border {
       border-left: 3px solid var(--gold);
       padding-left: 14px;
       margin: 10px 0;
       font-style: italic;
-      opacity: 0.8;
+      opacity: 0.85;
     }
     .badge-sm {
       display: inline-block;
@@ -347,27 +324,100 @@
       padding: 0 10px;
       border-radius: 30px;
       font-size: 12px;
-      border: 1px solid var(--glass-border);
+      border: 1px solid rgba(255,255,255,0.06);
       color: var(--muted);
       margin-right: 4px;
     }
 
-    /* ===== АНИМИРОВАННЫЕ ИКОНКИ В ЗАГОЛОВКАХ ===== */
-    .accordion-header .icon-pulse {
-      display: inline-block;
-      animation: iconPulse 2s ease-in-out infinite;
-      margin-right: 8px;
+    /* ТАЙМЕРЫ */
+    .timer-panel {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      width: 220px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.8);
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      transition: 0.3s;
+      font-size: 13px;
     }
-    @keyframes iconPulse {
-      0%, 100% { transform: scale(1); opacity: 0.8; }
-      50% { transform: scale(1.15); opacity: 1; }
+    .timer-panel h4 {
+      color: var(--text);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 6px;
     }
+    .timer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      gap: 6px;
+    }
+    .timer-row label { color: var(--muted); font-size: 12px; }
+    .timer-row .time-display {
+      font-weight: 700;
+      color: var(--cyan);
+      min-width: 50px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .timer-row button {
+      background: var(--gold);
+      border: none;
+      border-radius: 30px;
+      padding: 2px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #0f0e0d;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .timer-row button:hover { background: #fcd34d; transform: scale(0.95); }
+    .timer-row button.stop { background: var(--red); color: #fff; }
+    .timer-row button.stop:hover { background: #ef4444; }
+    .timer-toggle {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: var(--gold);
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 22px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(251,191,36,0.3);
+      z-index: 999;
+      transition: 0.3s;
+      color: #0f0e0d;
+      font-weight: 700;
+    }
+    .timer-toggle:hover { transform: scale(1.05); background: #fcd34d; }
+    .timer-panel.hidden { display: none; }
+    .timer-panel .close-timer {
+      position: absolute;
+      top: 4px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 18px;
+      cursor: pointer;
+    }
+    .timer-panel .close-timer:hover { color: var(--text); }
 
-    /* ===== КНОПКА НАВЕРХ ===== */
     #backTop {
       position: fixed;
       bottom: 30px;
-      right: 24px;
+      right: 80px;
       background: linear-gradient(135deg, var(--gold), #f59e0b);
       color: #0f0e0d;
       border: none;
@@ -383,12 +433,11 @@
       z-index: 998;
     }
     #backTop.visible { opacity: 1; pointer-events: auto; }
-    #backTop:hover { transform: scale(1.08) rotate(5deg); box-shadow: 0 4px 50px rgba(251,191,36,0.5); }
+    #backTop:hover { transform: scale(1.08); }
 
-    /* ===== ФУТЕР ===== */
     .footer {
       padding: 16px 22px 0;
-      border-top: 1px solid var(--glass-border);
+      border-top: 1px solid rgba(255,255,255,0.06);
       margin-top: 18px;
       font-size: 12px;
       color: var(--muted);
@@ -397,9 +446,65 @@
       opacity: 0.6;
     }
 
-    /* ===== АДАПТИВ ===== */
+    /* ФАКТЫ */
+    .fact-card {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      transition: 0.3s;
+      cursor: default;
+    }
+    .fact-card:hover { border-color: rgba(34,211,238,0.2); }
+    .fact-card .fact-number {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--cyan);
+      background: rgba(34,211,238,0.08);
+      padding: 0 10px;
+      border-radius: 30px;
+      margin-bottom: 6px;
+    }
+    .fact-card .fact-title {
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .fact-card .fact-text {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .fact-card .fact-source {
+      margin-top: 8px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+      font-style: italic;
+    }
+    .fact-nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .fact-nav button {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 30px;
+      padding: 6px 16px;
+      color: var(--muted);
+      font-size: 13px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .fact-nav button:hover { background: rgba(34,211,238,0.08); color: var(--cyan); border-color: rgba(34,211,238,0.15); }
+    .fact-nav button.active-fact { background: rgba(34,211,238,0.12); color: var(--cyan); border-color: var(--cyan); }
+
     @media (max-width: 600px) {
-      body { padding: 10px 8px 70px; }
+      body { padding: 10px 8px 110px; }
       .header { flex-direction: column; align-items: stretch; gap: 8px; }
       .search-box { flex: 1; }
       .tabs { padding: 10px 12px 0; gap: 4px; }
@@ -409,21 +514,21 @@
       .accordion-body { font-size: 14px; padding: 0 14px 14px; }
       .legend { font-size: 11px; padding: 8px 14px; gap: 8px; }
       .toc a { font-size: 11px; padding: 0 10px; }
-      #backTop { width: 44px; height: 44px; font-size: 20px; bottom: 16px; right: 16px; }
+      .timer-panel { width: 180px; right: 10px; bottom: 100px; padding: 10px 12px; }
+      #backTop { right: 10px; bottom: 60px; width: 44px; height: 44px; font-size: 20px; }
+      .timer-toggle { right: 10px; bottom: 100px; width: 40px; height: 40px; font-size: 18px; }
       .quote-of-day { max-width: 100%; white-space: normal; font-size: 11px; }
       .shape { display: none; }
+      .fact-card .fact-title { font-size: 15px; }
+      .fact-card .fact-text { font-size: 14px; }
     }
-    .found { background: rgba(251,191,36,0.2); border-radius: 4px; padding: 0 2px; box-shadow: 0 0 20px rgba(251,191,36,0.05); }
+    .found { background: rgba(251,191,36,0.18); border-radius: 4px; padding: 0 2px; }
   </style>
 </head>
 <body>
 
-<!-- ДИНАМИЧЕСКИЙ ГРАДИЕНТНЫЙ ФОН -->
 <div id="gradient-bg"></div>
-
-<!-- ПЛАВАЮЩИЕ ФИГУРЫ -->
 <div class="floating-shapes">
-  <div class="shape"></div>
   <div class="shape"></div>
   <div class="shape"></div>
   <div class="shape"></div>
@@ -438,7 +543,7 @@
         <span class="status-dot"></span>
         Регламент лорников <small>Yufu.Su #2</small>
       </h1>
-      <span class="quote-of-day" id="quoteOfDay">✨ "Сила не в статусе, а в поступках"</span>
+      <span class="quote-of-day" id="quoteOfDay">Сила не в статусе, а в поступках</span>
     </div>
     <div class="search-box">
       <input type="text" id="searchInput" placeholder="Поиск по всему..." />
@@ -456,328 +561,518 @@
   </div>
 
   <div class="tabs">
-    <button class="tab-btn active" data-tab="reglament">📜 Регламент</button>
-    <button class="tab-btn" data-tab="duties">⚔️ Обязанности</button>
-    <button class="tab-btn" data-tab="penalties">⚖️ Взыскания</button>
-    <button class="tab-btn" data-tab="info">ℹ️ Информация</button>
-    <button class="tab-btn" data-tab="sensou">🔮 Сенсоу</button>
+    <button class="tab-btn active" data-tab="reglament">Регламент</button>
+    <button class="tab-btn" data-tab="duties">Обязанности</button>
+    <button class="tab-btn" data-tab="penalties">Взыскания</button>
+    <button class="tab-btn" data-tab="info">Информация</button>
+    <button class="tab-btn" data-tab="sensou">Сенсоу</button>
+    <button class="tab-btn" data-tab="facts">Факты</button>
   </div>
 
   <div class="panels" id="panelsContainer">
-    <!-- ======== РЕГЛАМЕНТ ======== -->
+    <!-- ===== РЕГЛАМЕНТ (ПОЛНЫЙ) ===== -->
     <div class="tab-panel active" data-panel="reglament">
       <div class="toc">
         <a href="#r-test">Испытательный срок</a>
         <a href="#r-roll">/roll и no-roll</a>
-        <a href="#r-status">Статус</a>
+        <a href="#r-status">Правила статуса</a>
         <a href="#r-erp">ERP логика</a>
-        <a href="#r-general">Общие положения</a>
+        <a href="#r-general">Общие положения (1.1 – 1.27)</a>
       </div>
 
       <div class="accordion open" id="r-test">
-        <div class="accordion-header"><span><span class="icon-pulse">⏳</span>Испытательный срок</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>Испытательный срок</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
           <ul>
-            <li>Длится <span class="highlight">две недели</span> с момента прохождения на лорного персонажа.</li>
-            <li>Выговор на испытательном сроке → <span class="danger">снятие + перм ЧС</span>.</li>
-            <li>Отпуск продлевает срок <span class="key">1 к 1</span> (1 день отпуска = +1 день к ИС).</li>
+            <li>Испытательный срок длится <span class="highlight">две недели</span> и начинается с момента вашего прохождения на лорного персонажа.</li>
+            <li>В случае получения выговора на испытательном сроке вы получаете <span class="danger">снятие и перм ЧС</span> лорных персонажей.</li>
+            <li>Взятие отпуска на испытательном сроке продлевает время его действия. Соотношение <span class="key">1 к 1</span>.</li>
           </ul>
+          <div class="accent-border">Пояснение: 1 день отпуска = +1 день к испытательному сроку.</div>
         </div>
       </div>
 
       <div class="accordion" id="r-roll">
-        <div class="accordion-header"><span><span class="icon-pulse">🎲</span>/roll и no-roll</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>Команда /roll и статус no-roll</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
-          <p>Полный регламент: <a href="https://whiteprinc3.github.io/rollsystem/" target="_blank" style="color:var(--cyan);font-weight:700;text-shadow:0 0 30px rgba(34,211,238,0.15);">→ whiteprinc3.github.io/rollsystem/</a></p>
-          <p><span class="badge-sm">Важно</span> Диапазон 0–100, бонусы за ранг, no roll для Столпов и Лун.</p>
+          <p>Полный регламент по команде /roll, статусу no-roll для Хашир, Лун и лидеров, правилам для главных героев, примерам и таблице рангов с бонусами — на отдельном сайте системы бросков.</p>
+          <p style="margin:8px 0;"><a href="https://whiteprinc3.github.io/rollsystem/" target="_blank" style="color:var(--cyan);font-weight:700;">whiteprinc3.github.io/rollsystem/</a></p>
+          <p><span class="badge-sm">Важно</span> Диапазон 0–100, бонусы за ранг, no roll для Столпов и Лун, интерактивные панели и таблица «Кто кидает /roll».</p>
         </div>
       </div>
 
       <div class="accordion" id="r-status">
-        <div class="accordion-header"><span><span class="icon-pulse">⚡</span>Правила статуса</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>Правила статуса</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
           <ul>
-            <li>Статус ≠ вседозволенность. Действия должны быть логичны и по канону.</li>
-            <li><span class="danger">Запрещено</span> злоупотреблять /roll: после <span class="highlight">2 неудач</span> — пауза <span class="highlight">3 минуты</span>.</li>
+            <li>Статус не означает вседозволенности.</li>
+            <li>Любые действия должны быть логичными, соответствовать канону и правилам RP.</li>
+            <li>За использование статуса для нелогичных, нереалистичных или нарушающих баланс действий может последовать наказание.</li>
+            <li><span class="danger">Запрещено</span> злоупотреблять командой /roll: в случае двух неудач подряд Вы обязаны ждать <span class="highlight">3 минуты</span>, прежде чем вновь использовать команду.</li>
           </ul>
-          <div class="accent-border">/roll — инструмент честного исхода, а не способ избежать отыгровки.</div>
+          <div class="accent-border">/roll — это инструмент для честного и справедливого определения исхода, а не способ избежать логики и отыгровки. Всегда сохраняйте роль, уважение к логике мира и последовательность действий.</div>
         </div>
       </div>
 
       <div class="accordion" id="r-erp">
-        <div class="accordion-header"><span><span class="icon-pulse">❤️</span>ERP логика</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>Регламент соблюдения ERP логики</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
           <ul>
-            <li>Соблюдать канон пар. Лорникам <span class="key">до 18</span> — <span class="danger">запрет</span>.</li>
-            <li>Только противоположный пол. В личных домах — можно нарушить канон.</li>
-            <li><span class="danger">Запрещено</span> доводить до заведения детей.</li>
+            <li>Соблюдаем канон пары (Обанай – Мицури, Танджиро – Канао, Аой – Иноске, Зеницу – Незуко, Тенген – его жены и тд; <strong>Исключение:</strong> Вы не обладаете канон парой, вы имеете право развивать отношения с обычным игроком.)</li>
+            <li>Всем лорникам, которым по РП <span class="key">меньше 18 лет</span> <span class="danger">запрет на ERP</span>.</li>
+            <li>ЕРП только с противоположным полом.</li>
+            <li>В личных домах разрешено нарушение канон пары.</li>
+            <li>Соблюдать логику развития ваших отношений.</li>
+            <li><span class="danger">Запрещено</span> доводить ERP до стадии заведения детей и их рождения (секс и ничего больше, без роста населения на юфусе).</li>
           </ul>
         </div>
       </div>
 
       <div class="accordion" id="r-general">
-        <div class="accordion-header"><span><span class="icon-pulse">📋</span>Общие положения (1.1 – 1.27)</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>Общие положения (1.1 – 1.27)</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
           <ul>
-            <li><strong>1.1</strong> Нельзя на двух серверах.</li>
-            <li><strong>1.6</strong> Квота <span class="highlight">17:00–00:00</span>.</li>
-            <li><strong>1.10</strong> Столпы/Луны контролируют состав.</li>
-            <li><strong>1.13–1.26</strong> РП состав имеет право на наказания, мониторинг, вмешательство, обнуление ивентов, аннулирование отчётности, запрос информации, проверки, временные ограничения, координацию с лидерами, приоритет регламента.</li>
-            <li><strong>1.27</strong> Восстановление — только если не использовали второй слот.</li>
+            <li><strong>1.</strong> Данный регламент обязателен к исполнению всеми наборными персонажами.</li>
+            <li><strong>1.1.</strong> Наборные лорные персонажи второго сервера не могут стоять одновременно на первом сервере на наборном лорном персонаже, а также это работает наоборот.</li>
+            <li><strong>1.2.</strong> В случае рецидива нарушений мера наказаний увеличивается.</li>
+            <li><strong>1.3.</strong> Каждый лорный персонаж обязан строго и чётко выполнять поставленные РП составом указания, связанные с проектом.</li>
+            <li><strong>1.4.</strong> Каждый лорный персонаж обязан строго и чётко выполнять поставленные лидером фракции обязанности и указания по ней.</li>
+            <li><strong>1.5.</strong> Каждый наборный лорный персонаж обязан строго и чётко выполнять расписанные обязанности.</li>
+            <li><strong>1.6.</strong> Каждый лорный персонаж обязан в полной мере отыгрывать свою квоту по онлайну. <span class="danger">Категорически запрещено</span> отыгрывать квоту в AFK или выполнением какой-либо бесполезной деятельностью.</li>
+            <li><strong>1.7.</strong> Каждый лорный персонаж обязан соблюдать действующие правила дискорд-сервера, а также проекта; независимо, где будет выдано наказание — лорник сможет получить предупреждение или выговор.</li>
+            <li><strong>1.8.</strong> Квота лорных персонажей учитывается с <span class="highlight">17:00 до 00:00 по МСК</span>.</li>
+            <li><strong>1.9.</strong> Запрещена махинация с правилами внутреннего регламента лорников, так и активный поиск дыр в нём.</li>
+            <li><strong>1.10.</strong> Столпы/Луны обязуются контролировать собственный состав; в это входит: если вы замечаете массовые нарушения правил — вы должны предотвратить их беседой/пресечением. При массовых нарушениях устава, массовом неадекватном поведении также считается данный пункт.</li>
+            <li><strong>1.11.</strong> Запрещено видоизменять дискорд-сервер без оповещения РП-персонала и высшей администрации сервера, начиная с заместителя куратора. Если изменение будет полагать собой нарушение сервера — состав администрации имеет право выдать наказание в зависимости от нарушения.</li>
+            <li><strong>1.12.</strong> Запрещено перемещаться между двумя фракциями, если у Вас есть лорный персонаж. <strong>Исключение:</strong> второстепенные персонажи.</li>
+            <li><strong>1.13.</strong> <strong>Право на наказание.</strong> РП состав обладает правом выносить наказания лорным персонажам, опираясь на логику лора Клинка, правил сервера и положения регламента.</li>
+            <li><strong>1.14.</strong> <strong>Условное применение наказаний.</strong> Наказания применяются по усмотрению РП состава с учётом тяжести нарушения, контекста ситуации и предшествующего поведения персонажа.</li>
+            <li><strong>1.15.</strong> <strong>Мониторинг ситуации.</strong> РП состав осуществляет мониторинг ситуации на сервере, активности лорных персонажей и соблюдения ими обязанностей в рамках регламента, а также РП части сервера.</li>
+            <li><strong>1.16.</strong> <strong>Вмешательство в дела фракций.</strong> РП состав вправе вмешаться в дела любой фракции (истребители/демоны), если того требуют обстоятельства, правила проекта или необходимость разрешения конфликтных ситуаций.</li>
+            <li><strong>1.17.</strong> <strong>Обнуление итогов события.</strong> РП состав имеет право обнулить или уточнить итоги ивента, события, чтобы не допустить несоответствия с тайм-лайном сюжета проекта.</li>
+            <li><strong>1.18.</strong> <strong>Аннулирование отчётности.</strong> РП состав обладает правом аннулировать отчётность по аспектам подделки, обмана или некорректного заполнения; в таком случае квота за соответствующий период может быть не засчитана или пересмотрена.</li>
+            <li><strong>1.19.</strong> <strong>Обязательность решений.</strong> Решения РП состава по наказаниям и вмешательству в дела фракций обязательны к исполнению лидерами фракций, столпами, лунами и главными героями.</li>
+            <li><strong>1.20.</strong> <strong>Разрешение споров.</strong> При возникновении споров между лорными персонажами или фракциями окончательное решение по вопросам, связанным с лором и регламентом, принимает РП состав.</li>
+            <li><strong>1.21.</strong> <strong>Право на запрос информации.</strong> РП состав вправе запрашивать у лорных персонажей пояснения, скриншоты и иную информацию для проверки соблюдения регламента и правил проекта.</li>
+            <li><strong>1.22.</strong> <strong>Проверка отчётности.</strong> РП состав проводит выборочную или полную проверку отчётности лорных персонажей; при выявлении несоответствий, дублирования или сомнительных скриншотов отчётность может быть частично или полностью не засчитана.</li>
+            <li><strong>1.23.</strong> <strong>Временные ограничения.</strong> РП состав имеет право временно ограничить права лорного персонажа (в том числе на вторую профессию) на время выяснения обстоятельств.</li>
+            <li><strong>1.24.</strong> <strong>Координация с лидерами.</strong> РП состав вправе давать обязательные к исполнению указания лидерам фракций по вопросам порядка, лора и отчётности; неисполнение таких указаний рассматривается как нарушение регламента.</li>
+            <li><strong>1.25.</strong> <strong>Приоритет регламента.</strong> В вопросах, касающихся обязанностей и ограничений лорных персонажей, положения настоящего регламента и решения РП состава имеют приоритет над внутренними уставами фракций, если последние им противоречат.</li>
+            <li><strong>1.26.</strong> <strong>Предотвращение конфликтов интересов.</strong> РП состав при принятии решений в отношении лорных персонажей обязан исключать конфликт интересов; при его возникновении вопрос передаётся другому представителю РП состава или вышестоящему по должности.</li>
+            <li><strong>1.27.</strong> <strong>Восстановление персонажа в противоположной фракции.</strong> Если Вы использовали второй слот во фракции (пример: демоны), то Вы не можете восстановить своего персонажа в истребителях: ни ранг, ни должность. Однако, если Вы не использовали второй слот или делали это для теста, то у Вас имеется возможность восстановить своего персонажа после снятия с лорника.</li>
           </ul>
-          <div class="accent-border">Решения РП состава обязательны к исполнению.</div>
         </div>
       </div>
     </div>
 
-    <!-- ======== ОБЯЗАННОСТИ ======== -->
+    <!-- ===== ОБЯЗАННОСТИ (ПОЛНЫЕ) ===== -->
     <div class="tab-panel" data-panel="duties">
       <div class="toc">
         <a href="#d-prime">Prime-Time</a>
-        <a href="#d-leaders">Лидеры</a>
-        <a href="#d-pillars">Столпы/Луны</a>
-        <a href="#d-heroes">ГГ</a>
-        <a href="#d-second">Вторые профы</a>
-        <a href="#d-behavior">Поведение</a>
+        <a href="#d-leaders">Лидеры фракций</a>
+        <a href="#d-pillars">Столпы и 12 лун</a>
+        <a href="#d-heroes">Главные герои</a>
+        <a href="#d-second">Вторые профессии</a>
+        <a href="#d-behavior">Правила поведения</a>
         <a href="#d-report">Отчётность</a>
         <a href="#d-afk">AFK</a>
       </div>
 
       <div class="accordion open" id="d-prime">
-        <div class="accordion-header"><span><span class="icon-pulse">⏰</span>Prime-Time</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>Prime-Time для Столпов, Лун и Главных героев</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
           <ul>
-            <li><span class="highlight">17:00–00:00</span> — <span class="highlight">90 мин</span> активного времени.</li>
-            <li>AFK макс <span class="highlight">30 мин</span>.</li>
+            <li>Ежедневно <span class="highlight">17:00–00:00</span> — присутствие на сервере <span class="highlight">90 минут</span> активного времени.</li>
+            <li>Столпы и Луны: активность на максимуме, AFK с оповещением в OOC/Asay — макс. <span class="highlight">30 минут</span>.</li>
+            <li>Главные герои — активность в полном масштабе для игроков.</li>
+            <li>Ежедневно: скриншот в ветку онлайна, отчётность по критериям информации лун/столпов/ГГ.</li>
           </ul>
         </div>
       </div>
 
       <div class="accordion" id="d-leaders">
-        <div class="accordion-header"><span><span class="icon-pulse">👑</span>Лидеры фракций</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>Лидеры фракций</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
-          <p><strong>Задачи:</strong> порядок, активности, устав. Ежемесячно отчёт РП куратору.</p>
-          <div class="accent-border"><span class="danger">Запрещено</span> фабриковать отчёты. Участие в чужих мероприятиях — 50%.</div>
+          <p><strong>Основные задачи:</strong> порядок в фракции, активности, устав и его модернизация, помощь игрокам, решение споров, задачи от РП состава.</p>
+          <p><strong>Ежемесячно:</strong></p>
+          <ol>
+            <li>Помощь в межфракционных событиях.</li>
+            <li>Контроль фракционных событий.</li>
+            <li>Отчёт по обязанностям в конце месяца лично РП куратору.</li>
+          </ol>
+          <div class="accent-border">Квота — допустимая деятельность (ивенты, тренировки, РП). <span class="danger">Запрещено</span> фабриковать отчёты. Участие в чужих мероприятиях — 50%.</div>
         </div>
       </div>
 
       <div class="accordion" id="d-pillars">
-        <div class="accordion-header"><span><span class="icon-pulse">⚔️</span>Столпы и 12 лун</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>Столпы и демоны 12 лун</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
-          <p>Раз в 2 недели: <span class="info-highlight">18 скринов</span>, событие на <span class="info-highlight">8+</span> человек, 2 события для фракции.</p>
+          <p><strong>Основные задачи:</strong> порядок, активности, работа с составом, помощь игрокам, задачи от РП состава и лидера, актуальный канал «информации» по дыханию/отряду.</p>
+          <p><strong>Раз в две недели:</strong></p>
+          <ol>
+            <li>Участие в межфракционном/глобальном РП событии раз в месяц или фракционное событие для <span class="info-highlight">8+ человек</span>.</li>
+            <li>Два события для всей фракции.</li>
+            <li>Квота отчётности: <span class="info-highlight">18 скринов</span> за две недели (события + активность отдельно).</li>
+            <li>Отправка отчётов по истечении двух недель в специальный канал Discord.</li>
+          </ol>
           <div class="accent-border">Запрещено фабриковать отчётность. Чужие мероприятия — 50%.</div>
         </div>
       </div>
 
       <div class="accordion" id="d-heroes">
-        <div class="accordion-header"><span><span class="icon-pulse">🌟</span>Главные герои</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>Главные герои</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
-          <p><span class="info-highlight">18 скринов</span> за 2 недели. Те же правила.</p>
+          <p><strong>Задачи:</strong> создания активностей и РП.</p>
+          <p><strong>Раз в две недели:</strong> <span class="info-highlight">18 скринов</span> отчётности, отправка отчётов в канал. Те же правила по допустимой деятельности и запрету фабрикации.</p>
         </div>
       </div>
 
       <div class="accordion" id="d-second">
-        <div class="accordion-header"><span><span class="icon-pulse">🔄</span>Вторые профессии</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>Вторые профессии</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
-          <p>Только для Лун/Столпов. Одобрение высшей администрации. Только после основной квоты.</p>
+          <p>Только для лун/столпов.</p>
+          <p><strong>Истребители:</strong> столпы могут вступать в любое открытое дыхание или закрытое с полноценным вступлением (искл. донатные). Одобрение — высшая администрация.</p>
+          <p><strong>Демоны:</strong> луны — любой отряд или профа не выше демона низшей магии крови (искл. донатные отряды). Одобрение — высшая администрация.</p>
+          <div class="accent-border"><span class="key">Важно:</span> вторая профессия только после отыгровки основной квоты. Отпуск = полное отсутствие. При выговоре — нельзя переключаться на вторую профу (искл. донат модель/лорник).</div>
         </div>
       </div>
 
       <div class="accordion" id="d-behavior">
-        <div class="accordion-header"><span><span class="icon-pulse">🤝</span>Правила поведения</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>Правила поведения</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
           <ul>
-            <li>Запрещено злоупотребление, «душка». Конфликты — через РП состав.</li>
-            <li>Уважительный тон. Решения РП состава обязательны.</li>
+            <li><strong>2.</strong> Запрещено злоупотребление полномочиями, «душка»/«слив» игроков.</li>
+            <li><strong>2.1.</strong> Пример другим: без грубости вне РП, качественный отыгрыш.</li>
+            <li><strong>2.2.</strong> Конфликты между лорниками — через РП состав. Запрещено NonRP.</li>
+            <li><strong>2.3.</strong> Макс. выговоры во фракции → выговор на лорного персонажа.</li>
+            <li><strong>2.4.</strong> Запрещено провоцировать OOC-конфликты и переносить личные споры в игровой процесс.</li>
+            <li><strong>2.5.</strong> Обязателен уважительный тон общения в отношении игроков и состава проекта.</li>
+            <li><strong>2.6.</strong> Все решения РП состава и лидера фракции обязательны к исполнению в рамках регламента и действующего устава/пакта.</li>
           </ul>
         </div>
       </div>
 
       <div class="accordion" id="d-report">
-        <div class="accordion-header"><span><span class="icon-pulse">📸</span>Отчётность</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>Правила отчетности наборных лорных персонажей</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
           <ul>
-            <li>Макс <span class="info-highlight">2 скрина</span> с ситуации, КД <span class="highlight">15+ мин</span>.</li>
-            <li>Полный HUD, время, ваш перс. <span class="danger">Запрещено</span> фабриковать.</li>
+            <li><strong>3.</strong> Отчётность строго по концепту, в установленное время. <span class="danger">Запрещено</span> фабриковать, закрывать всю отчётность за <span class="highlight">3 дня</span>, использовать обработанные скрины.</li>
+            <li><strong>3.1.</strong> С одной ситуации максимум <span class="info-highlight">2 скрина</span>.</li>
+            <li><strong>3.2.</strong> КД между скринами — <span class="highlight">15+ минут</span>.</li>
+            <li><strong>3.3.</strong> На каждом скрине обязателен полный HUD.</li>
+            <li><strong>3.4.</strong> На каждом скрине должно быть видно время.</li>
+            <li><strong>3.5.</strong> На каждом скрине должен присутствовать Ваш персонаж.</li>
+            <li><strong>3.6.</strong> Максимум скринов на активность в Discord — <span class="info-highlight">3</span>.</li>
+            <li><strong>3.7.</strong> Максимум скринов на мероприятия (2) — <span class="info-highlight">6</span>.</li>
+            <li><strong>3.8.</strong> Максимум скринов на захваты — <span class="info-highlight">2</span>.</li>
+            <li><strong>3.9.</strong> Отчёт по обязательным ивентам: <span class="info-highlight">3 скрина</span> (оповещение, сбор/инструктаж, процесс/завершение).</li>
+            <li><strong>3.10.</strong> Мероприятие/тренировка учитывается как <span class="info-highlight">0.5</span> за троих участников.</li>
+            <li><strong>3.11.</strong> Мероприятие/тренировка учитывается как <span class="info-highlight">1</span> за двоих участников.</li>
+            <li><strong>3.12.</strong> При выявлении подделки или нарушений оформления отчётность может быть аннулирована РП составом.</li>
           </ul>
         </div>
       </div>
 
       <div class="accordion" id="d-afk">
-        <div class="accordion-header"><span><span class="icon-pulse">💤</span>AFK</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>AFK на лорных персонажах</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
           <ul>
-            <li>Макс <span class="highlight">30 мин</span>, оповестить в ООС.</li>
-            <li><span class="danger">Не на видных местах</span>.</li>
+            <li><strong>4.</strong> Макс. общее время в AFK — <span class="highlight">30 минут</span>.</li>
+            <li><strong>4.1.</strong> Перед AFK — оповестить в ООС чат, на сколько уходите.</li>
+            <li><strong>4.2.</strong> <span class="danger">Запрещено</span> уходить в AFK на видных местах.</li>
           </ul>
         </div>
       </div>
     </div>
 
-    <!-- ======== ВЗЫСКАНИЯ ======== -->
+    <!-- ===== ВЗЫСКАНИЯ (ПОЛНЫЕ) ===== -->
     <div class="tab-panel" data-panel="penalties">
       <div class="toc">
-        <a href="#p-types">Виды взысканий</a>
-        <a href="#p-workoff">Отработка</a>
-        <a href="#p-chs">ЧС</a>
+        <a href="#p-types">Регламент взысканий</a>
+        <a href="#p-workoff">Отработка взысканий</a>
+        <a href="#p-chs">Регламент ЧС лорников</a>
         <a href="#p-leave">Отпуска</a>
       </div>
 
       <div class="accordion open" id="p-types">
-        <div class="accordion-header"><span><span class="icon-pulse">⚖️</span>Виды взысканий</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>Регламент взысканий</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
+          <p><strong>Выговор</strong> — за нарушение правил проекта, регламентов лорников или невыполнение квот.</p>
           <ul>
-            <li><span class="key">Обычный выговор</span> — стандарт. <span class="danger">Перманентный</span> — отработка через <span class="highlight">2 мес.</span></li>
-            <li>Предупреждение слетает через <span class="highlight">неделю</span>.</li>
+            <li><span class="key">Обычные выговоры</span> — стандартные нарушения.</li>
+            <li><span class="danger">Перманентные выговоры</span> — серьёзные нарушения или рецидив. Отработка через <span class="highlight">2 месяца</span> при хорошем поведении.</li>
           </ul>
+          <p><strong>Санкции за обычный выговор:</strong> запрет второй профессии после квоты; норма онлайна — <span class="highlight">2 часа</span>.</p>
+          <p><strong>Предупреждения</strong> — за незначительные нарушения. Слетают через <span class="highlight">неделю</span>, санкций нет.</p>
         </div>
       </div>
 
       <div class="accordion" id="p-workoff">
-        <div class="accordion-header"><span><span class="icon-pulse">🔧</span>Отработка</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>Отработка взысканий</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
           <ul>
-            <li>Выговор — задание от РП, через <span class="key">3 дня</span>.</li>
-            <li>Перм — через <span class="key">3 мес.</span> <span class="danger">Срок на отработку — неделя</span>.</li>
+            <li>Отработка выговора — задание от РП состава, возможно через <span class="key">3 дня</span> после получения.</li>
+            <li>Предупреждения снимаются автоматически через неделю.</li>
+            <li>Перманентные выговоры — отработка через <span class="key">3 месяца</span> при одобрении РП-куратора.</li>
+            <li><span class="danger">Срок на отработку выговора — неделя</span>, иначе он становится перманентным.</li>
+            <li>Активный отпуск: +1 день (или по числу дней отпуска) к времени на отработку. Абуз отпуска → перм выговор, отработка только через <span class="key">4 месяца</span>.</li>
           </ul>
         </div>
       </div>
 
       <div class="accordion" id="p-chs">
-        <div class="accordion-header"><span><span class="icon-pulse">🚫</span>ЧС лорников</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>Регламент ЧС лорников</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
+          <p>При снятии — ЧС от 5 дней до перманента в зависимости от причины.</p>
+          <p><strong>1. Снятие после испытательного срока:</strong> сразу после срока — <span class="danger">ЧС <span class="highlight">1 месяц</span></span>; через время без выговоров — <span class="danger">ЧС <span class="highlight">5 дней</span></span>.</p>
+          <p><strong>2. Снятие с выговорами:</strong></p>
           <ul>
-            <li>После ИС: <span class="danger">1 мес.</span> или <span class="danger">5 дней</span> (без выговоров).</li>
-            <li>С выговорами: 1 → <span class="highlight">3 мес.</span>, 2 → <span class="highlight">6 мес.</span>, 3 → перм.</li>
+            <li><span class="info-highlight">1</span> выговор = <span class="danger">ЧС <span class="highlight">3 мес.</span></span></li>
+            <li><span class="info-highlight">2</span> выговора = <span class="danger">ЧС <span class="highlight">6 мес.</span></span></li>
+            <li><span class="info-highlight">3</span> выговора = <span class="danger">перм ЧС</span></li>
+          </ul>
+          <p><strong>3. Снятие без двухнедельного отчёта:</strong></p>
+          <ul>
+            <li>на испытательном = <span class="danger">перм ЧС</span></li>
+            <li>с <span class="info-highlight">1</span> выговором = от <span class="highlight">3 мес.</span></li>
+            <li>с <span class="info-highlight">2</span> выговорами = от <span class="highlight">6 мес.</span></li>
           </ul>
         </div>
       </div>
 
       <div class="accordion" id="p-leave">
-        <div class="accordion-header"><span><span class="icon-pulse">🏖️</span>Отпуска</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>Отпуска</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
           <ul>
-            <li>Макс <span class="highlight">1 неделя</span>, КД <span class="highlight">3 недели</span>.</li>
-            <li>Отпуск = полное отсутствие. <span class="danger">Запрещено</span> играть во время отпуска.</li>
+            <li>Макс. отпуск <span class="highlight">1 неделя</span>; КД на отпуск — <span class="highlight">3 недели</span> (искл. семейные обстоятельства).</li>
+            <li>Норма онлайна только в прайм-тайм. Не успели — отпуск «отдых/устал» принимается до <span class="highlight">18:30</span>, после отклоняется.</li>
+            <li>Отпуск = полное отсутствие на сервере. Заход на любой из двух серверов → аннулирование отпуска.</li>
+            <li>Отпуск скидывать в ветку лорного персонажа.</li>
+            <li><span class="danger">Важно:</span> отпуск «отдых», но играете на первом для квоты, или «болеете» и играете — отпуск аннулируется + наказание за квоту.</li>
           </ul>
         </div>
       </div>
     </div>
 
-    <!-- ======== ИНФОРМАЦИЯ ======== -->
+    <!-- ===== ИНФОРМАЦИЯ ===== -->
     <div class="tab-panel" data-panel="info">
       <div class="toc">
-        <a href="#i-general">Общее</a>
-        <a href="#i-timeline">Лор</a>
-        <a href="#i-staff">Отвечающие</a>
+        <a href="#i-general">Общая информация</a>
+        <a href="#i-timeline">Временные рамки</a>
+        <a href="#i-staff">Отвечающие за лорников</a>
       </div>
 
       <div class="accordion open" id="i-general">
-        <div class="accordion-header"><span><span class="icon-pulse">ℹ️</span>Общая информация</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>Общая информация</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
           <ul>
-            <li>Вопросы через РП-персонал. Отчётность ежедневно в Discord.</li>
+            <li>Вопросы по лорникам — через РП-персонал.</li>
+            <li>Отчётность ежедневно в ветки Discord.</li>
+            <li>Следить за объявлениями в официальном Discord проекта.</li>
           </ul>
         </div>
       </div>
 
       <div class="accordion" id="i-timeline">
-        <div class="accordion-header"><span><span class="icon-pulse">📅</span>Лор-таймлайн</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>Временные рамки</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
-          <p>Действие — <span class="key">перед/после горы Натагума</span>. ГГ не в пиковой силе. Не ссылаться на арки манги.</p>
+          <p>Действие — промежуток <span class="key">перед/после горы Натагума</span>. Учитывать при отыгрыше возможностей персонажей.</p>
+          <p>Главные герои не в пиковой силе, особенно на испытательном сроке. По мере получения статуса «киноэ» положение может меняться. Не ссылаться на арки манги — у нас не та арка. Учитывать механику сервера (например, Танджиро с «танцем бога огня», Незуко с магией крови и берсерком).</p>
         </div>
       </div>
 
       <div class="accordion" id="i-staff">
-        <div class="accordion-header"><span><span class="icon-pulse">👥</span>Отвечающие</span><span class="arrow">▾</span></div>
+        <div class="accordion-header"><span>Отвечающие за лорников</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
           <ul>
             <li>РП Куратор</li>
-            <li>Деп. по демонам</li>
-            <li>Деп. по истребителям</li>
+            <li>Деп. РП Куратор (демоны)</li>
+            <li>Деп. РП Куратор (истребители)</li>
           </ul>
         </div>
       </div>
     </div>
 
-    <!-- ======== СЕНСОУ ======== -->
+    <!-- ===== СЕНСОУ (ПОЛНЫЙ) ===== -->
     <div class="tab-panel" data-panel="sensou">
       <div class="toc">
-        <a href="#s-1">1. Онлайн</a>
+        <a href="#s-1">1. Онлайн и отчёт</a>
         <a href="#s-2">2. Смена дыхания</a>
         <a href="#s-3">3. Доступные дыхания</a>
-        <a href="#s-4">4. Нарушение</a>
-        <a href="#s-5">5. Статус</a>
-        <a href="#s-6">6. Имя</a>
+        <a href="#s-4">4. Нарушение → лишение</a>
+        <a href="#s-5">5. Статус (не no-roll)</a>
+        <a href="#s-6">6. Имя и фамилия</a>
         <a href="#s-7">7. Главенство</a>
       </div>
 
       <div class="accordion open" id="s-1">
-        <div class="accordion-header" style="border-left-color:var(--purple);"><span><span class="icon-pulse">📋</span>1. Онлайн и отчёт</span><span class="arrow">▾</span></div>
+        <div class="accordion-header" style="border-left-color: var(--purple);"><span>1. Онлайн и отчётность</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
-          <p>Ежедневно <span class="sensou-highlight">1.30</span> и отчёт в канал.</p>
-          <div class="accent-border" style="border-left-color:var(--purple);">Обязательное условие для сохранения профессии.</div>
+          <p>Получая данного лорника от лидера фракции, Вы обязаны онлайнить <span class="sensou-highlight">ежедневно по 1.30</span> и отправлять отчёт в соответствующий канал.</p>
+          <div class="accent-border" style="border-left-color:var(--purple);">Это обязательное условие для сохранения профессии.</div>
         </div>
       </div>
 
       <div class="accordion" id="s-2">
-        <div class="accordion-header" style="border-left-color:var(--purple);"><span><span class="icon-pulse">🌀</span>2. Смена дыхания</span><span class="arrow">▾</span></div>
+        <div class="accordion-header" style="border-left-color: var(--purple);"><span>2. Смена дыхания</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
-          <p><span class="danger">Запрещено</span> чаще <span class="highlight">2 раз в неделю</span> через !magic.</p>
+          <p><span class="danger">Запрещено</span> чаще чем <span class="highlight">два раза в неделю</span> менять выбранное Вами дыхание через <span class="key">!magic</span>.</p>
         </div>
       </div>
 
       <div class="accordion" id="s-3">
-        <div class="accordion-header" style="border-left-color:var(--purple);"><span><span class="icon-pulse">🔥</span>3. Доступные дыхания</span><span class="arrow">▾</span></div>
+        <div class="accordion-header" style="border-left-color: var(--purple);"><span>3. Доступные дыхания</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
+          <p>В доступе на смену дыхания имеется лишь из перечня:</p>
           <ul>
-            <li><span class="sensou-highlight">Камень</span>, <span class="sensou-highlight">Вода</span>, <span class="sensou-highlight">Пламя</span>, <span class="sensou-highlight">Ветер</span>, <span class="sensou-highlight">Гром</span></li>
-            <li>А также то, что привязано к профе (если вы на второй профе хаширой).</li>
+            <li><span class="sensou-highlight">Камень</span></li>
+            <li><span class="sensou-highlight">Вода</span></li>
+            <li><span class="sensou-highlight">Пламя</span></li>
+            <li><span class="sensou-highlight">Ветер</span></li>
+            <li><span class="sensou-highlight">Гром</span></li>
+            <li>а также то, что привязано к профе (если Вы являетесь на второй профе хаширой того или иного дыхания, то можете взять и его).</li>
           </ul>
         </div>
       </div>
 
       <div class="accordion" id="s-4">
-        <div class="accordion-header" style="border-left-color:var(--purple);"><span><span class="icon-pulse">⚠️</span>4. Нарушение → лишение</span><span class="arrow">▾</span></div>
+        <div class="accordion-header" style="border-left-color: var(--purple);"><span>4. Нарушение → лишение</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
-          <p><span class="danger">В случае нарушения</span> — <span class="danger">лишение профессии</span>.</p>
+          <p><span class="danger">В случае нарушения</span> на данной профессии Вы будете <span class="danger">её лишены</span>.</p>
         </div>
       </div>
 
       <div class="accordion" id="s-5">
-        <div class="accordion-header" style="border-left-color:var(--purple);"><span><span class="icon-pulse">🎯</span>5. Статус</span><span class="arrow">▾</span></div>
+        <div class="accordion-header" style="border-left-color: var(--purple);"><span>5. Статус Сенсоу</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
-          <p>Сенсоу Убуяшики <span class="danger">не no-roll</span> и <span class="danger">не столп</span>.</p>
-          <p>Это <span class="key">обычный истребитель</span> — родственник семьи Убуяшики.</p>
+          <p>Профессия Сенсоу Убуяшики <span class="danger">не является no-roll</span> и <span class="danger">не имеет характеристики столпа</span>.</p>
+          <p>То есть Вы — <span class="key">обычный истребитель</span>, что просто является родственником семьи Убуяшики.</p>
         </div>
       </div>
 
       <div class="accordion" id="s-6">
-        <div class="accordion-header" style="border-left-color:var(--purple);"><span><span class="icon-pulse">✏️</span>6. Имя и фамилия</span><span class="arrow">▾</span></div>
+        <div class="accordion-header" style="border-left-color: var(--purple);"><span>6. Имя и фамилия</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
-          <p><span class="danger">Запрещено</span> менять имя и фамилию <span class="sensou-highlight">Убуяшики</span>.</p>
+          <p><span class="danger">Запрещено</span> менять имя Сенсоу на любое другое, как и саму фамилию <span class="sensou-highlight">Убуяшики</span>.</p>
         </div>
       </div>
 
       <div class="accordion" id="s-7">
-        <div class="accordion-header" style="border-left-color:var(--purple);"><span><span class="icon-pulse">👑</span>7. Главенство</span><span class="arrow">▾</span></div>
+        <div class="accordion-header" style="border-left-color: var(--purple);"><span>7. Главенство в мероприятиях</span><span class="arrow">▾</span></div>
         <div class="accordion-body">
-          <p>При главенстве в мероприятии — <span class="danger">наказание за нарушения</span>.</p>
+          <p>Если необходимо взять главенство в каком-либо мероприятии как лидер, то в случае нарушений Вы можете получить <span class="danger">соответствующее наказание на сервере</span>.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== ФАКТЫ ОБ АНИМЕ ===== -->
+    <div class="tab-panel" data-panel="facts">
+      <h2 style="color:var(--cyan); margin-bottom:8px;">Интересные факты о мире Клинка, рассекающего демонов</h2>
+      <p style="color:var(--muted); margin-bottom:16px; font-size:14px;">Собрано по материалам официальной вики-энциклопедии и проверенных источников.</p>
+
+      <div class="fact-nav">
+        <button class="active-fact" data-filter="all">Все</button>
+        <button data-filter="production">Производство</button>
+        <button data-filter="lore">Лор и мир</button>
+        <button data-filter="characters">Персонажи</button>
+        <button data-filter="records">Рекорды</button>
+      </div>
+
+      <div class="facts-grid" id="factsGrid">
+        <div class="fact-card" data-category="records">
+          <div class="fact-number">Факт 1</div>
+          <div class="fact-title">Самый кассовый аниме-фильм в истории</div>
+          <div class="fact-text">Фильм «Поезд Бесконечности» (Mugen Train) собрал более 500 миллионов долларов по всему миру и стал самым кассовым японским фильмом всех времён, обойдя «Унесённых призраками» Хаяо Миядзаки. В 2025 году первый фильм трилогии «Бесконечный замок» собрал уже более 685 миллионов долларов по всему миру [citation:12].</div>
+          <div class="fact-source">Источник: официальная вики Kimetsu no Yaiba, данные бокс-офиса</div>
+        </div>
+
+        <div class="fact-card" data-category="production">
+          <div class="fact-number">Факт 2</div>
+          <div class="fact-title">Эпизод, изменивший всё</div>
+          <div class="fact-text">19-й эпизод первого сезона, «Хиноками», стал вирусным в социальных сетях и признан одной из лучших анимационных сцен в истории аниме. В нём Танджиро впервые использует «Танец бога огня» — технику, переданную в его семье. Этот момент совпал с пробуждением Кровавого Демонического Искусства Незуко и стал поворотной точкой для всей франшизы [citation:2].</div>
+          <div class="fact-source">Источник: Britannica, статья о Demon Slayer</div>
+        </div>
+
+        <div class="fact-card" data-category="lore">
+          <div class="fact-number">Факт 3</div>
+          <div class="fact-title">Эпоха Тайсё — не случайный выбор</div>
+          <div class="fact-text">Действие аниме разворачивается в эпоху Тайсё (1912–1926) — время, когда Япония активно модернизировалась. Это создаёт контраст между традиционными деревнями, где живут самураи и демоны, и городами, где уже ходят пароходы и используется огнестрельное оружие [citation:2][citation:11].</div>
+          <div class="fact-source">Источник: официальная вики Kimetsu no Yaiba</div>
+        </div>
+
+        <div class="fact-card" data-category="lore">
+          <div class="fact-number">Факт 4</div>
+          <div class="fact-title">Почему клинки из особого металла?</div>
+          <div class="fact-text">Ничирин-клинки выковываются из уникальной руды, которая впитывает солнечный свет. Только обезглавливание таким мечом, солнечный свет или яд из цветов глицинии способны окончательно убить демона. Это объясняет, почему истребители так тщательно ухаживают за своими мечами [citation:2][citation:7].</div>
+          <div class="fact-source">Источник: Britannica, статья о Demon Slayer</div>
+        </div>
+
+        <div class="fact-card" data-category="characters">
+          <div class="fact-number">Факт 5</div>
+          <div class="fact-title">Скрытый смысл масок</div>
+          <div class="fact-text">Маски в аниме — не просто украшение. Хакуко (белая лиса) носили ученики Урокодаки, включая Сабито и Макомо. Маска тэнгу у самого Урокодаки отсылает к ёкаю — духу-ворону с длинным носом. Кузнецы носят маски хёттоко из традиционного театра кёгэн [citation:11].</div>
+          <div class="fact-source">Источник: Cybersport.ru, разбор японской мифологии в аниме</div>
+        </div>
+
+        <div class="fact-card" data-category="characters">
+          <div class="fact-number">Факт 6</div>
+          <div class="fact-title">Генья — уникальный человек</div>
+          <div class="fact-text">Генья Шиназугава — единственный человек, способный поедать плоть демонов. У него настолько крепкая челюсть и иммунная система, что он не превращается в демона от этой пищи. Однако его персонаж остаётся одной из самых загадочных фигур в сериале [citation:3].</div>
+          <div class="fact-source">Источник: фан-вики Kimetsu no Yaiba</div>
+        </div>
+
+        <div class="fact-card" data-category="production">
+          <div class="fact-number">Факт 7</div>
+          <div class="fact-title">Техника Ufotable: 2D + 3D</div>
+          <div class="fact-text">Студия Ufotable использует уникальное сочетание рисованной 2D-анимации и 3D-графики. Это позволяет создавать невероятно плавные и зрелищные сцены боёв. В фильмах студия даже показывает процесс создания ключевых кадров, демонстрируя, как CGI и цифровые эффекты дополняют ручную анимацию [citation:7][citation:12].</div>
+          <div class="fact-source">Источник: официальные закадровые материалы, MAXIM</div>
+        </div>
+
+        <div class="fact-card" data-category="records">
+          <div class="fact-number">Факт 8</div>
+          <div class="fact-title">Более 200 миллионов копий манги</div>
+          <div class="fact-text">По состоянию на 2025 год манга «Клинок, рассекающий демонов» имеет более 220 миллионов копий в обращении по всему миру (с учётом цифровых изданий). Она входит в число самых продаваемых манг всех времён. В 2020 году было продано 82 миллиона копий только в Японии — почти в 10 раз больше, чем у манги, занявшей второе место [citation:2][citation:6].</div>
+          <div class="fact-source">Источник: Britannica, данные Oricon</div>
+        </div>
+
+        <div class="fact-card" data-category="lore">
+          <div class="fact-number">Факт 9</div>
+          <div class="fact-title">Связь Музана с демонами</div>
+          <div class="fact-text">В манге есть упоминания, что Музан Кибуцудзи получает всё, что видят или слышат его демоны. Он также может делиться с ними своими воспоминаниями и отслеживать их местонахождение. Тамайо, Юширо и Незуко смогли снять это проклятие — одна из причин, почему они так важны для сюжета [citation:3].</div>
+          <div class="fact-source">Источник: фан-вики Kimetsu no Yaiba</div>
+        </div>
+
+        <div class="fact-card" data-category="characters">
+          <div class="fact-number">Факт 10</div>
+          <div class="fact-title">Скрытая роль семьи Танджиро в фильме</div>
+          <div class="fact-text">Семья Танджиро сыграла секретную эпизодическую роль в фильме «Поезд Бесконечности». Многие фанаты думали, что пламя в ключевых сценах символизирует способность Танджиро «дышать солнцем», но на самом деле оно символизирует его семью и связь с предками [citation:3].</div>
+          <div class="fact-source">Источник: фан-вики Kimetsu no Yaiba</div>
         </div>
       </div>
     </div>
   </div>
 
   <footer class="footer">
-    © 2025 Лорники Yufu.Su #2 · ROCKET-версия · Визуальные эффекты
+    © 2025 Лорники Yufu.Su #2 · ROCKET-версия
   </footer>
 </div>
 
-<button id="backTop" aria-label="Наверх">↑</button>
+<!-- ТАЙМЕРЫ -->
+<button class="timer-toggle" id="timerToggle">⏱</button>
+<div class="timer-panel hidden" id="timerPanel">
+  <button class="close-timer" id="closeTimer">×</button>
+  <h4>Напоминалки</h4>
+  <div class="timer-row"><label>КД 15 мин</label><span class="time-display" id="cdTimer">00:00</span><button data-timer="cd">Старт</button></div>
+  <div class="timer-row"><label>AFK 30 мин</label><span class="time-display" id="afkTimer">00:00</span><button data-timer="afk">Старт</button></div>
+  <div class="timer-row"><label>Квота 90 мин</label><span class="time-display" id="quotaTimer">00:00</span><button data-timer="quota">Старт</button></div>
+  <div class="timer-row"><label>Пауза /roll 3 мин</label><span class="time-display" id="rollTimer">00:00</span><button data-timer="roll">Старт</button></div>
+</div>
+
+<button id="backTop">↑</button>
 
 <script>
   (function() {
-    // ===== ТАБЫ =====
+    // Табы
     const btns = document.querySelectorAll('.tab-btn');
     const panels = document.querySelectorAll('.tab-panel');
     function showTab(id) {
@@ -790,14 +1085,14 @@
       clearHighlights();
     }));
 
-    // ===== АККОРДЕОНЫ =====
+    // Аккордеоны
     document.querySelectorAll('.accordion-header').forEach(header => {
       header.addEventListener('click', function() {
         this.parentElement.classList.toggle('open');
       });
     });
 
-    // ===== ПОИСК =====
+    // Поиск
     const searchInput = document.getElementById('searchInput');
     const searchBtn = document.getElementById('searchBtn');
     function clearHighlights() {
@@ -836,7 +1131,7 @@
     searchBtn.addEventListener('click', performSearch);
     searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') performSearch(); });
 
-    // ===== КНОПКА "НАВЕРХ" =====
+    // Кнопка наверх
     const backTop = document.getElementById('backTop');
     window.addEventListener('scroll', function() {
       backTop.classList.toggle('visible', window.scrollY > 300);
@@ -845,21 +1140,114 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // ===== СЛУЧАЙНАЯ ЦИТАТА ДНЯ =====
+    // Таймеры
+    const timers = {
+      cd: { el: document.getElementById('cdTimer'), seconds: 900, running: false, interval: null },
+      afk: { el: document.getElementById('afkTimer'), seconds: 1800, running: false, interval: null },
+      quota: { el: document.getElementById('quotaTimer'), seconds: 5400, running: false, interval: null },
+      roll: { el: document.getElementById('rollTimer'), seconds: 180, running: false, interval: null }
+    };
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+    }
+    function updateDisplay(id) {
+      const t = timers[id];
+      if (t.el) t.el.textContent = formatTime(t.seconds);
+    }
+    function startTimer(id) {
+      const t = timers[id];
+      if (t.running) return;
+      t.running = true;
+      const btn = document.querySelector('[data-timer="' + id + '"]');
+      if (btn) { btn.textContent = 'Стоп'; btn.classList.add('stop'); }
+      t.interval = setInterval(function() {
+        if (t.seconds <= 0) {
+          clearInterval(t.interval);
+          t.running = false;
+          if (btn) { btn.textContent = 'Старт'; btn.classList.remove('stop'); }
+          if (navigator.vibrate) navigator.vibrate(200);
+          updateDisplay(id);
+          return;
+        }
+        t.seconds--;
+        updateDisplay(id);
+      }, 1000);
+    }
+    function stopTimer(id) {
+      const t = timers[id];
+      if (!t.running) return;
+      clearInterval(t.interval);
+      t.running = false;
+      const btn = document.querySelector('[data-timer="' + id + '"]');
+      if (btn) { btn.textContent = 'Старт'; btn.classList.remove('stop'); }
+    }
+    function resetTimer(id) {
+      const t = timers[id];
+      stopTimer(id);
+      t.seconds = (id === 'cd') ? 900 : (id === 'afk') ? 1800 : (id === 'quota') ? 5400 : 180;
+      updateDisplay(id);
+    }
+    document.querySelectorAll('[data-timer]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        const id = this.dataset.timer;
+        const t = timers[id];
+        if (t.running) {
+          stopTimer(id);
+        } else {
+          if (t.seconds <= 0) resetTimer(id);
+          startTimer(id);
+        }
+      });
+    });
+    Object.keys(timers).forEach(function(id) { updateDisplay(id); });
+
+    // Панель таймеров
+    const panel = document.getElementById('timerPanel');
+    const toggleBtn = document.getElementById('timerToggle');
+    const closeBtn = document.getElementById('closeTimer');
+    toggleBtn.addEventListener('click', function() {
+      panel.classList.toggle('hidden');
+      toggleBtn.textContent = panel.classList.contains('hidden') ? '⏱' : '×';
+    });
+    closeBtn.addEventListener('click', function() {
+      panel.classList.add('hidden');
+      toggleBtn.textContent = '⏱';
+    });
+
+    // Факты: фильтр по категориям
+    const filterBtns = document.querySelectorAll('.fact-nav button');
+    const factCards = document.querySelectorAll('.fact-card');
+    filterBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        filterBtns.forEach(function(b) { b.classList.remove('active-fact'); });
+        this.classList.add('active-fact');
+        const filter = this.dataset.filter;
+        factCards.forEach(function(card) {
+          if (filter === 'all' || card.dataset.category === filter) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Цитата дня
     const quotes = [
-      '✨ "Сила не в статусе, а в поступках"',
-      '🔥 "Демон внутри — твой главный противник"',
-      '🌸 "Цветок сакуры падает, но корни остаются"',
-      '⚔️ "Меч — продолжение воли"',
-      '🌙 "Даже луна имеет тёмную сторону"',
-      '☀️ "Рассвет всегда наступает после тьмы"',
-      '🌀 "Дыхание — это жизнь"',
-      '🛡️ "Защита слабых — долг сильных"',
-      '🌊 "Вода точит камень терпением"',
-      '🔥 "Пламя сжигает сомнения"'
+      'Сила не в статусе, а в поступках',
+      'Демон внутри — твой главный противник',
+      'Цветок сакуры падает, но корни остаются',
+      'Меч — продолжение воли',
+      'Даже луна имеет тёмную сторону',
+      'Рассвет всегда наступает после тьмы',
+      'Дыхание — это жизнь',
+      'Защита слабых — долг сильных',
+      'Вода точит камень терпением',
+      'Пламя сжигает сомнения'
     ];
     document.getElementById('quoteOfDay').textContent = quotes[Math.floor(Math.random() * quotes.length)];
-
   })();
 </script>
 </body>
